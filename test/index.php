@@ -37,14 +37,20 @@ if ($row) {
     </head>
     <body>
         <form name="login" action="/test/home.php" method="POST">
-            
+            <div>
             <label>user's</label>
             <input type="text" value="user" name="user" />
+            </div>
             <br>
+            
+            <div>
             <label>password's</label>
             <input type="password" value="pass" name="pass" />
+            </div>
             <br>
+            <div>
             <input type="submit" value="login" name="submit" />
+            </div>
             <br>
              <span><?php echo $error; ?></span>
             
