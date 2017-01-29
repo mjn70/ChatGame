@@ -4,21 +4,39 @@
  Author     : mosa
 -->
 
+//<?php 
+//include ('loging.php');
+//
+//if (isset($_SESSION['login_user'])){
+//    header("location: profile.php");
+//}
+//?>
 <?php 
-include ('loging.php');
 
-if (isset($_SESSION['login_user'])){
-    header("location: profile.php");
-}
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$data = "company";
+// Create connection
+$conn = new mysqli($servername, $username, $password,$data);
+
+
+
+
+
+
+
+
 ?>
+
+
+
 <html>
     <head>
         <meta charset="UTF-8">
         <title>Chat Game</title>
         
         <meta name="viewport" content="width=devicewidth,initial-scale=1">
-        
-        <link href="style.css" rel="stylesheet" media="all">
     
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -63,7 +81,7 @@ if (isset($_SESSION['login_user'])){
         <input type="submit" name="submit" value=" Login " class="btn btn-default">
     </div>
       <hr>
-      <div class="form-group">
+      <div class="form-group" col-sm-offset-2 col-sm-10>
          <div        
           <span><?php echo $error; ?></span>
          </div>
