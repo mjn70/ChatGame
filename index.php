@@ -4,28 +4,12 @@
  Author     : mosa
 -->
 
-//<?php 
-//include ('loging.php');
-//
-//if (isset($_SESSION['login_user'])){
-//    header("location: profile.php");
-//}
-//?>
 <?php 
+include ('login.php');
 
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$data = "company";
-// Create connection
-$conn = new mysqli($servername, $username, $password,$data);
-
-
-
-
-
-
-
+if (isset($_SESSION['login_user'])){
+   header("location: profile.php");
+}
 
 ?>
 
