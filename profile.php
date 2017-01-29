@@ -1,12 +1,13 @@
+<?php
+include('session.php');
+?>
+
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<?php
-include('session.php');
-?>
 <html>
 <head>
 <title>Your Home Page</title>
@@ -31,6 +32,7 @@ include('session.php');
     <div  class="container">
         <div class="jumbotron">
         <b id="welcome">Welcome : <i><?php echo $login_session; ?></i></b>
+        <br/>
         <b id="logout"><a href="logout.php">Log Out</a></b>
         </div>
     </div>
