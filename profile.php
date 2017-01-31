@@ -2,19 +2,19 @@
 include('session.php');
 ?>
 
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<?php
+include ('chat.php');
+?>
+<?php 
+$error = "";
+?>
 <html>
 <head>
 <title>Your Home Page</title>
 
         <meta name="viewport" content="width=devicewidth,initial-scale=1">
         
-        <link href="style.css" rel="stylesheet" media="all"
+        
     
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -26,15 +26,67 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         
         <link href="style.css" rel="stylesheet" media="all">
-
+       
+        <script>
+//            
+//  
+//           function find(){
+//               x = new XMLHttpRequest();
+//               x.onreadystatechange = function(){
+//                if(x.readyState == 4 && x.status == 200){
+//		document.getElementById('player').value;
+//                            } 
+//		}
+//		req.open('GET','find.php',true); 
+//		req.send();
+//		}
+//		setInterval(function(){find()},1000);
+//           
+            
+//		function ajax(){		
+//		var req = new XMLHttpRequest();		
+//		req.onreadystatechange = function(){	
+//		if(req.readyState == 4 && req.status == 200){
+//		document.getElementById('chat').innerHTML = req.responseText;
+//                            } 
+//		}
+//		req.open('GET','chat.php',true); 
+//		req.send();
+//		}
+//		setInterval(function(){ajax()},1000);     
+                
+        </script>
+        
+        
+        
 </head>
-<body>
+<body onload="ajax()">
     <div  class="container">
         <div class="jumbotron">
-        <b id="welcome">Welcome : <i><?php echo $login_session; ?></i></b>
+        <b id="welcome">Welcome : <i id="logname"><?php echo $login_session; ?></i></b>
         <br/>
         <b id="logout"><a href="logout.php">Log Out</a></b>
         </div>
+        <div id="main">
+            <div>
+                <input id="SearchOp" name="search" type="button" value="Search For  Player" class="btn btn-default" onclick="find()">
+                <label id="player"></label>
+            </div>
+            <hr>
+            <div id="chat" >   
+                <textarea id="chat" class="form-control" rows="3"  disabled=""></textarea>
+            </div>
+            <br>
+            <div >
+                <form name="submit" action="profile.php" method="POST">
+                
+                <input id="word" type="text" class="form-control" placeholder=" Send you word ">
+                <input id="sand" type="button" value="sand" name="sand" onclick="sand()" class="btn btn-default">
+                <label id='Letter'><?php ?></label>
+               </form>
+            </div>
+        </div>
+        
     </div>
 </body>
 </html>

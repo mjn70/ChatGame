@@ -36,7 +36,7 @@ if (isset($_SESSION['login_user'])){
     <h1>Chat Game</h1>      
   </div>
      
-     <form action="" method="post" class="form-horizontal ">
+     <form action="" method="post" class="form-horizontal">
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">User</label>
     <div class="col-sm-10">
