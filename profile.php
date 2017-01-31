@@ -1,10 +1,12 @@
 <?php
-include('session.php');
-?>
+include('session.php');?>
 
 <?php
-include ('chat.php');
+include ('chat.php');?>
+
+<?php include ('find.php');
 ?>
+
 <?php 
 $error = "";
 ?>
@@ -12,9 +14,7 @@ $error = "";
 <head>
 <title>Your Home Page</title>
 
-        <meta name="viewport" content="width=devicewidth,initial-scale=1">
-        
-        
+        <meta name="viewport" content="width=devicewidth,initial-scale=1">  
     
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -28,20 +28,20 @@ $error = "";
         <link href="style.css" rel="stylesheet" media="all">
        
         <script>
-//            
-//  
-//           function find(){
-//               x = new XMLHttpRequest();
-//               x.onreadystatechange = function(){
-//                if(x.readyState == 4 && x.status == 200){
-//		document.getElementById('player').value;
-//                            } 
-//		}
-//		req.open('GET','find.php',true); 
-//		req.send();
-//		}
-//		setInterval(function(){find()},1000);
-//           
+            
+  
+           function find(){
+               x = new XMLHttpRequest();
+               x.onreadystatechange = function(){
+                if(x.readyState == 4 && x.status == 200){
+		document.getElementById('player').value = x.responseText;
+                            } 
+		}
+		x.open('GET','find.php',true); 
+		x.send();
+		}
+		setInterval(function(){find()},1000);
+          
             
 //		function ajax(){		
 //		var req = new XMLHttpRequest();		
