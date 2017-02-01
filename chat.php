@@ -1,11 +1,20 @@
 
 <?php
  include ("conm.php");
+          
+ 
+        $P1 = $_SESSION['login_user'];
+        $P2 = $_SESSION['player_session'];
+        
+	$query = "SELECT * FROM `message` WHERE convid = 3 ORDER BY id ASC";
+	$run = $conn->query($query);
+        
+        while($row = $run->fetch_array()) :
+      ?>
 	
-//	$query = "SELECT user1,user2 from conv WHERE id = (SELECT convID from message WHERE id = player1 AND WHERE id = player2 )";
-//	$run = $conn->query($query);
-//       
-//	while($row = $run->fetch_array()) :
-//		
-//		endwhile;
-?>
+                        <div id="chat_data">
+				<span style="color:green;"><?php echo $row['user']; ?></span> :
+				<span style="color:brown;"><?php echo $row['text']; ?></span>
+			</div>
+            
+	<?php  endwhile; ?>

@@ -1,14 +1,11 @@
 <?php
-include('session.php');?>
-
-<?php
-include ('chat.php');?>
-
-<?php include ('find.php');
+include('session.php');
 ?>
 
 <?php 
 $error = "";
+$notword = "";
+$playername = "";
 ?>
 <html>
 <head>
@@ -29,31 +26,31 @@ $error = "";
        
         <script>
             
-  
-           function find(){
-               x = new XMLHttpRequest();
-               x.onreadystatechange = function(){
-                if(x.readyState == 4 && x.status == 200){
-		document.getElementById('player').value = x.responseText;
-                            } 
-		}
-		x.open('GET','find.php',true); 
-		x.send();
-		}
-		setInterval(function(){find()},1000);
+//  
+//                function find(){
+//                    var x = new XMLHttpRequest();
+//                    x.onreadystatechange = function(){
+//                        if(x.readyState == 4 && x.status ==200){
+//                            document.getElementById('player').innerHTML = x.responseType;
+//                        }
+//                    }
+//                    x.open('GET','find.php',true);
+//                    x.send();
+//                }
+		
           
             
-//		function ajax(){		
-//		var req = new XMLHttpRequest();		
-//		req.onreadystatechange = function(){	
-//		if(req.readyState == 4 && req.status == 200){
-//		document.getElementById('chat').innerHTML = req.responseText;
-//                            } 
-//		}
-//		req.open('GET','chat.php',true); 
-//		req.send();
-//		}
-//		setInterval(function(){ajax()},1000);     
+		function ajax(){		
+		var req = new XMLHttpRequest();		
+		req.onreadystatechange = function(){	
+		if(req.readyState == 4 && req.status == 200){
+		document.getElementById('chat').innerHTML = req.responseText;
+                            } 
+		}
+		req.open('GET','chat.php',true); 
+		req.send();
+		}
+		setInterval(function(){ajax()},1000);     
                 
         </script>
         
@@ -69,21 +66,70 @@ $error = "";
         </div>
         <div id="main">
             <div>
-                <input id="SearchOp" name="search" type="button" value="Search For  Player" class="btn btn-default" onclick="find()">
-                <label id="player"></label>
+                <form action="profile.php" method="POST">
+                     
+                <input id="SearchOp"   name="SearchOp" type="submit" value="Search For  Player" class="btn btn-default" >
+                <p id="player" s style="color: greenyellow;" ><?php echo $playername;   ?></p> 
+
+                 </form>
+                <?php
+                   if (isset($_POST['SearchOp']))
+              {
+              
+               include ('conm.php');
+      
+               mysqli_stat($conn);
+         
+              $findquery  = ("SELECT username from login WHERE NOT username ='$login_session;'");
+              $findq = $conn->query($findquery );
+            
+                if ($findq <= 1) {
+               echo  array_rand($findq,1); 
+               $playername = $findq;     
+                mysqli_close($conn);
+            
+               } else {
+                 $playername = "Did not find player" ;   
+                   mysqli_close($conn);
+                      }
+              }
+
+                ?>
+
+
             </div>
             <hr>
-            <div id="chat" >   
-                <textarea id="chat" class="form-control" rows="3"  disabled=""></textarea>
-            </div>
+            <div id="chat_box" > 
+                <div id="chat"></div>
+         	 </div>
             <br>
             <div >
-                <form name="submit" action="profile.php" method="POST">
+                <form  action="profile.php" method="POST">
                 
-                <input id="word" type="text" class="form-control" placeholder=" Send you word ">
-                <input id="sand" type="button" value="sand" name="sand" onclick="sand()" class="btn btn-default">
-                <label id='Letter'><?php ?></label>
-               </form>
+                    <input name="msg" id="msg" type="text" class="form-control" placeholder=" Send you word ">
+                <input id="submit" type="submit" value="submit" name="submit" class="btn btn-default">
+                <label id='Letter'><?php echo $notword; ?></label>
+                </form>
+                <?php 
+                
+		if(isset($_POST['submit'])){ 
+                   if (empty($_POST['msg'])) {
+		         $notword = "white a word";
+                   }
+                   }else {
+                        mysqli_stat($conn);
+                        
+		$name = $login_session;
+		$msg  = $_POST['msg'];
+		
+		$query = "INSERT INTO message (user,text,convid) VALUES ('$name;','$msg;',3)";     
+		$run = $con->query($query);
+                mysqli_close($conn);
+                
+                    }
+		
+		?>
+               
             </div>
         </div>
         
