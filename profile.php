@@ -1,7 +1,9 @@
 <?php
 include('session.php');
 ?>
-
+<?php 
+ include ("conm.php");
+ ?>
 <?php 
 $error = "";
 $notword = "";
@@ -25,39 +27,37 @@ $playername = "";
         <link href="style.css" rel="stylesheet" media="all">
        
         <script>
-            
-//  
-//                function find(){
-//                    var x = new XMLHttpRequest();
-//                    x.onreadystatechange = function(){
-//                        if(x.readyState == 4 && x.status ==200){
-//                            document.getElementById('player').innerHTML = x.responseType;
-//                        }
-//                    }
-//                    x.open('GET','find.php',true);
-//                    x.send();
+
+//                function refrashlist(){
+//                 var r = new XMLHttpRequest();	
+//                 r.onreadystatechange = function(){
+//                     if(r.readyState === 4 && r.status === 200){
+//                       document.getElementById('tablelist').innerHTML = r.responseText;
+//                   }
+//                 };
+//                 r.open('GET','list.php',true;);
+//                 r.send();
 //                }
-		
-          
             
 		function ajax(){		
 		var req = new XMLHttpRequest();		
 		req.onreadystatechange = function(){	
-		if(req.readyState == 4 && req.status == 200){
+		if(req.readyState === 4 && req.status === 200){
 		document.getElementById('chat').innerHTML = req.responseText;
                             } 
-		}
+		};
 		req.open('GET','chat.php',true); 
 		req.send();
-		}
-		setInterval(function(){ajax()},1000);     
+            }
+                
+		setInterval(function(){ajax();},1000);     
                 
         </script>
         
         
         
 </head>
-<body onload="ajax()">
+<body onload="ajax();">
     <div  class="container">
         <div class="jumbotron">
         <b id="welcome">Welcome : <i id="logname"><?php echo $login_session; ?></i></b>
@@ -68,35 +68,11 @@ $playername = "";
             <div>
                 <form action="profile.php" method="POST">
                      
-                <input id="SearchOp"   name="SearchOp" type="submit" value="Search For  Player" class="btn btn-default" >
+                    <input id="SearchOp" disabled=""  name="SearchOp" type="submit" value="Search For  Player" class="btn btn-default" >
                 <p id="player" s style="color: greenyellow;" ><?php echo $playername;   ?></p> 
+          
 
                  </form>
-                <?php
-                   if (isset($_POST['SearchOp']))
-              {
-              
-               include ('conm.php');
-      
-               mysqli_stat($conn);
-         
-              $findquery  = ("SELECT username from login WHERE NOT username ='$login_session;'");
-              $findq = $conn->query($findquery );
-            
-                if ($findq <= 1) {
-               echo  array_rand($findq,1); 
-               $playername = $findq;     
-                mysqli_close($conn);
-            
-               } else {
-                 $playername = "Did not find player" ;   
-                   mysqli_close($conn);
-                      }
-              }
-
-                ?>
-
-
             </div>
             <hr>
             <div id="chat_box" > 
@@ -111,25 +87,52 @@ $playername = "";
                 <label id='Letter'><?php echo $notword; ?></label>
                 </form>
                 <?php 
+                 
+                 $conn = new mysqli("localhost", "root", "root", "company");
+
+                 if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                    } 
+                    
                 
 		if(isset($_POST['submit'])){ 
-                   if (empty($_POST['msg'])) {
-		         $notword = "white a word";
-                   }
-                   }else {
-                        mysqli_stat($conn);
-                        
-		$name = $login_session;
+                   if (($_POST['msg'] != "")) {
+		                
+		$name = $_SESSION['login_user'];
 		$msg  = $_POST['msg'];
 		
-		$query = "INSERT INTO message (user,text,convid) VALUES ('$name;','$msg;',3)";     
+		$query  = mysqli_query($conn,"INSERT INTO message (user,text,convid) values ('$name;','$msg;',3)");     
 		$run = $con->query($query);
-                mysqli_close($conn);
-                
+                   }
+                   }else {
+
+                        $notword = "white a word";
                     }
 		
 		?>
                
+            </div>
+            <div>
+                <div>
+                <button type="button" class="btn btn-default">refresh</button>
+                </div>
+                <div>
+                <table border="1" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <div id="tablelist">
+                        
+                    </div>
+                    </tbody>
+                </table>
+                </div>
+               </div>
+
             </div>
         </div>
         
