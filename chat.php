@@ -2,9 +2,7 @@
 <?php
  include ("conm.php");
           
- 
-        $P1 = $_SESSION['login_user'];
-        $P2 = $_SESSION['player_session'];
+          $chatgrop_id = $_SESSION['Chat_gorp_id'];
         
 	$query = "SELECT * FROM `message` WHERE convid = 3 ORDER BY id ASC";
 	$run = $conn->query($query);

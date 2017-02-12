@@ -16,7 +16,9 @@ $row = mysqli_fetch_assoc($ses_sql);
 $login_session =$row['username'];
 $_SESSION['login_id'] =$row['id'];
 if(!isset($login_session)){
-
+        
+        $query = mysqli_query($conn,"UPDATE login SET stat=0 WHERE username = '$login_session'" );     
+        
 	mysqli_close($conn); // Closing Connection
 	header('Location: index.php'); // Redirecting To Home Page
 }

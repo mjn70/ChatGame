@@ -62,7 +62,7 @@ if (isset($_SESSION['login_user'])){
     <div class="col-sm-offset-2 col-sm-10">
         <input type="submit" name="submit" value=" Login " class="btn btn-default">
     </div>
-      <hr>
+      <br>
       <div class="form-group" col-sm-offset-2 col-sm-10>
          <div        
           <span><?php echo $error; ?></span>
