@@ -12,7 +12,7 @@ if(session_destroy()) // Destroying All Sessions
                 
       
            $query = mysqli_query($conn,"UPDATE login SET stat=0 WHERE username = '$login_session'" );     
-            mysqli_close($conn);
+           
                     
 	header("Location: index.php"); // Redirecting To Home Page
         
