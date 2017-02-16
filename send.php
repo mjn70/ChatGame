@@ -9,7 +9,7 @@ if(isset($_POST['done'])){
                 $name = $_SESSION['login_user'];
                 $msg  = $_POST['message_text'];
 
-                $query  = mysqli_query($conn,"INSERT INTO message (user,text,convid) VALUES('{$name}','{$msg}',3)");     
+                $query  = mysqli_query($conn,"INSERT INTO message (user,text,convid) VALUES('{$name}','{$msg}',  $chatgrop_id)");     
 
 }
 ?>

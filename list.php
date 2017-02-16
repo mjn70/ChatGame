@@ -1,7 +1,7 @@
 <?php
                         
                         include ("conm.php");
-
+              
                          $listquery = "SELECT id,username from login  WHERE NOT username ='$login_session')";
                          $listq = $conn->query($$listquery);
                          if($listq->num_rows >= 1 or $listq->num_rows > 5){

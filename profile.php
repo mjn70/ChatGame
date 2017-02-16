@@ -69,6 +69,25 @@ include ('session.php');
 
          });
          
+         //invite player
+           $("document").ready(function(){
+            
+            $("#inv").click(function(){
+             $.ajax({
+                 url: "invtochat.php",
+                 type:"POST",
+                 async: false,
+                 data:{
+                     "sending": 1
+                 },
+                 success: function(f){
+                    $("#invmesg").html(f);
+                    }
+                });
+                
+            });
+
+         });
 
         </script>
 
@@ -83,13 +102,15 @@ include ('session.php');
         <br/>
         <b id="logout"><a href="logout.php">Log Out</a></b>
         </div>
-        <div >
-            
+        <div >         
                 <from>
                     <input id="searchOp"  name="searchOp" type="submit" value="Search Player Name "  class="btn btn-default">
                     <input id="plyername" name="plyername" type="text" >
-                     <input id="inv" name="inv" type="submit" value="Invite" class="btn btn-default"  >
                  </from>
+            <from><input id='inv' name='inv' type='submit' value='Invite' class='btn btn-default'></from>
+            <div id="invmesg">
+                
+            </div>
             <hr>
             <div id="player">
            
@@ -117,8 +138,14 @@ include ('session.php');
 
                
             </div>
-          
-
+          <?php
+          $t = "20";
+          $t = sha1($t);
+            echo $t. " \n";
+            echo '<br>';
+            echo sha1("6"). " \n";
+          ?>
+               
             </div>
         </div>
         

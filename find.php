@@ -8,14 +8,18 @@
                    $user_name = $_POST['find_name'];
                      
                    $Fq = mysqli_query($conn,"SELECT id,username FROM login WHERE username = '$user_name' and id != $login_sid");
-                   $frow= mysqli_num_rows($Fq);
-                   if($findq == 1){
-                       $_SESSION['$player_id']= $frow['id'];
-                       $_SESSION['$player_name']= $frow['username']; 
-                       echo "Find Player Name: ". $frow['username'];
+                   $frow = mysqli_fetch_array($Fq);
+                   
+                   if( $frow['username'] != ""){
                        
-                   }else {     
-                    echo "<p>0 results</p>";            
+                       $_SESSION['$player_id']= $frow['id'];
+                       $_SESSION['$player_name']= $frow['username'];
+                       $userfind = $frow['username'];
+                       
+                       echo "Find Player Name: ". $userfind;
+                       
+                    } else {
+                        echo "<p>0 results</p>";
                     } 
          }
                 ?>
