@@ -26,8 +26,13 @@ include ('session.php');
         <script type="text/javascript">
             // send message
          $("document").ready(function(){
-            
+
             $("#submit").click(function(){
+                
+              if( !$('#msg').val().length === 0 ,$('#msg').val().length >= 25 ) {
+                  $('#LetterM').val("white a word to sund!!")
+              }else
+              {  
                 var mesg = $("#msg").val();
                 $.ajax({
                     url:"send.php",
@@ -40,28 +45,72 @@ include ('session.php');
                     success: function(data){
                         $("#mesg").val('');
                     }
-                    
                 });
+              };
+          });
+        });  
+              
                 
-            });
-
-         });
-         // get player name
+         // Create room name and deleat it
           $("document").ready(function(){
             
-            $("#searchOp").click(function(){
-    
-              var Pname = $("#plyername").val();
+            $("#CreateRoom").click(function(){
+              if( !$('#Create_room-name').val().length === 0 ,$('#Create_room-name').val().length >= 25 ) {
+                  
+              }else
+              {
+              var rname = $("#Create_room-name").val();
              $.ajax({
-                 url: "find.php",
+                 url: "Create_room.php",
                  type:"POST",
                  async: false,
                  data:{
-                     "findset": 1,
-                     "find_name": Pname
+                     "Create_room-did": 1,
+                     "Room_name": rname
                  },
                  success: function(d){
-                    $("#player").html(d);
+                    $("#Room_create_name").html(d);
+//                    location.reload();
+                    }
+                });
+              };
+          });
+        });
+            // cancel Room or deleat it
+              $("document").ready(function(){
+            
+                $("#delt_room").click(function(){
+                  $.ajax({
+                 url: "room_delt.php",
+                 type:"POST",
+                 async: false,
+                 data:{
+                     "deleat_room-did": 1
+                 },
+                 success: function(rd){
+                    $("#delt_room").html(rd);
+//                    location.reload();
+                    }
+                });
+         });
+         
+       });
+         
+         
+       // Find Room
+          $("document").ready(function(){
+            
+            $("#join_room").click(function(){
+
+             $.ajax({
+                 url: "join_room.php",
+                 type:"POST",
+                 async: false,
+                 data:{
+                     "find_room": 1     
+                 },
+                 success: function(fr){
+                    $("#Join_room_name").html(fr);  
                     }
                 });
                 
@@ -69,32 +118,37 @@ include ('session.php');
 
          });
          
-         //invite player
-           $("document").ready(function(){
-            
-            $("#inv").click(function(){
-             $.ajax({
-                 url: "invtochat.php",
-                 type:"POST",
-                 async: false,
-                 data:{
-                     "sending": 1
-                 },
-                 success: function(f){
-                    $("#invmesg").html(f);
-                    }
-                });
-                
-            });
-
-         });
-
         </script>
-
+        <script type="text/javascript">
+            // refresh chat every sec 
+		$(document).ready(function() {
+			setInterval(function () {
+				$('#chat_box').load('chat.php');}, 1000);
+		});
+                
+                //Radio chose
+              function valueChanged() { 
+          if (document.getElementById("radioCR").checked === true) {
+        document.getElementById("radioCR").value = 1;
+        document.getElementById("radioFR").value = 0;
+        $('#CreateRoom').prop("disabled",false);
+        $('#Create_room-name').prop("disabled",false);
+        $('#join_room').prop("disabled",true);
+            } else {
+        document.getElementById("radioCR").value = 0;
+        document.getElementById("radioFR").value = 1;
+         $('#CreateRoom').prop("disabled",true);
+         $('#Create_room-name').prop("disabled",true);
+         $('#join_room').prop("disabled",false);
+         
+            }
+}     
+                
+          </script>
 </head>
 
 <body  >
-    
+
     <div  class="container">
         
         <div class="jumbotron">  
@@ -102,51 +156,69 @@ include ('session.php');
         <br/>
         <b id="logout"><a href="logout.php">Log Out</a></b>
         </div>
-        <div >         
+        <div >   
+            <div>
+                <label>Chose between : Create Room or Find room </label>
+                <br>
+                <label>
+                    <input id="radioCR" type="radio" name="Chose" value="1" onchange="valueChanged()"  checked=""/>
+                : Create Room
+                </label>&nbsp;&nbsp;&nbsp;
+                <label>
+                   <input id="radioFR" type="radio" name="Chose" value="0" onchange="valueChanged()" />
+                : Find room
+                 </label>
+            </div>
+            <br>
                 <from>
-                    <input id="searchOp"  name="searchOp" type="submit" value="Search Player Name "  class="btn btn-default">
-                    <input id="plyername" name="plyername" type="text" >
+                    <input id="CreateRoom"  name="searchRoom" type="submit" value="Create Room Name"  class="btn btn-default">
+                    <input id="Create_room-name" name="plyername" type="text" >
+<!--                    <label id="Room_create_name" style="color:green;"></label>-->
                  </from>
-            <from><input id='inv' name='inv' type='submit' value='Invite' class='btn btn-default'></from>
-            <div id="invmesg">
+            <div id="Room_create_name">
+                
+            </div>
+            <hr>          
+            <from>
+                <input type="submit" id="join_room" name="join_room" value="Find Room" class="btn btn-default" disabled="" >
+            </from>
+            <div id="Join_room_name">
                 
             </div>
             <hr>
-            <div id="player">
+            <div id="Room_name">
            
             </div>
             <hr>
                 <div id="chat_box">
                     
                 </div>
-             <script type="text/javascript">
-            // refresh chat every sec 
-		$(document).ready(function() {
-			setInterval(function () {
-				$('#chat_box').load('chat.php')
-			}, 1000);
-		});
-          </script>
             <hr>
             <br>
             <div >
                 <form >    
                 <input name="msg" id="msg" type="text" class="form-control" placeholder=" Send you word ">
                 <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-default">
-                <p id="LetterM"></p>
+                <p style="color: red" id="LetterM"></p>
                 </form>
 
-               
             </div>
-          <?php
-          $t = "20";
-          $t = sha1($t);
-            echo $t. " \n";
-            echo '<br>';
-            echo sha1("6"). " \n";
-          ?>
-               
-            </div>
+             <?php 
+             include('conm.php');
+               $query  = "SELECT room_userid FROM room_mm WHERE Room_stat = 1 AND room_userid != 1 ORDER BY RAND() LIMIT 1";
+               $resultt= mysqli_query($conn, $query);
+//               $row = mysqli_fetch_array($resultt, MYSQLI_ASSOC);
+                       $row = mysqli_fetch_assoc($resultt);
+
+          
+         //but it in array
+//         $room_rows = mysqli_fetch_array($room_query);
+         //pick rondom id
+//         $rondom_id = array_rand($room_if_from_array,1);
+           echo "text id : ". $row["room_userid"];
+        
+         ?>  
+         </div>
         </div>
         
    

@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+$logout_name =  $_SESSION['login_user'];
 if(session_destroy()) // Destroying All Sessions
 {
                   $conn = new mysqli("localhost", "root", "root", "company");
@@ -10,8 +10,8 @@ if(session_destroy()) // Destroying All Sessions
                     die("Connection failed: " . $conn->connect_error);
                     } 
                 
-      
-           $query = mysqli_query($conn,"UPDATE login SET stat=0 WHERE username = '$login_session'" );     
+           $qs = "UPDATE login SET stat=0 WHERE username = '$logout_name'";
+           mysqli_query($conn, $qs);    
            
                     
 	header("Location: index.php"); // Redirecting To Home Page

@@ -25,7 +25,7 @@
                       // add the user name in friends list
                       $addtolist = mysqli_query($conn,"INSERT INTO friends (`fid`, `fname`, `fchatid`) VALUES ('$player_id', '$player_name', '$findchat')");
                       
-                   echo "invite Send to ". $player_name;
+                   echo "invite Send to ". $player_name ." chat id:".$findchat;
 
                    } else { 
                        echo "invite fail";           

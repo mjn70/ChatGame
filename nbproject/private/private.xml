@@ -4,9 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/ChatGame/profile.php</file>
-            <file>file:/C:/ChatGame/send.php</file>
-            <file>file:/C:/ChatGame/invtochat.php</file>
-            <file>file:/C:/ChatGame/find.php</file>
+            <file>file:/C:/ChatGame/Join_room.php</file>
+            <file>file:/C:/ChatGame/create_room.php</file>
+            <file>file:/C:/ChatGame/session.php</file>
         </group>
     </open-files>
 </project-private>
