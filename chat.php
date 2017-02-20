@@ -16,7 +16,7 @@ session_start();
                         <div id="chat_data">
 				<span style="color:green;"><?php echo $row['user']; ?></span> :
 				<span style="color:brown;"><?php echo $row['text']; ?></span>
-                                <span style="float:right;"><?php echo formatDate($row['date']); ?></span>
+
 			</div>
             
 	<?php  endwhile; 

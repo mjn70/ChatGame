@@ -123,11 +123,11 @@ include ('session.php');
             // refresh chat every sec 
 		$(document).ready(function() {
 			setInterval(function () {
-				$('#chat_box').load('chat.php');}, 1000);
+				$('#chat_box').load('chat.php');}, 1500);
 		});
                 
-                //Radio chose
-              function valueChanged() { 
+                //Radio Changed
+              function RadioChanged() { 
           if (document.getElementById("radioCR").checked === true) {
         document.getElementById("radioCR").value = 1;
         document.getElementById("radioFR").value = 0;
@@ -143,7 +143,11 @@ include ('session.php');
          
             }
 }     
-                
+              
+              
+              
+              
+           
           </script>
 </head>
 
@@ -158,15 +162,15 @@ include ('session.php');
         </div>
         <div >   
             <div>
-                <label>Chose between : Create Room or Find room </label>
+                <label>Chose between : Create Room or Find Room </label>
                 <br>
                 <label>
-                    <input id="radioCR" type="radio" name="Chose" value="1" onchange="valueChanged()"  checked=""/>
+                    <input id="radioCR" type="radio" name="Chose" value="1" onchange="RadioChanged()()"  checked=""/>
                 : Create Room
                 </label>&nbsp;&nbsp;&nbsp;
                 <label>
-                   <input id="radioFR" type="radio" name="Chose" value="0" onchange="valueChanged()" />
-                : Find room
+                   <input id="radioFR" type="radio" name="Chose" value="0" onchange="RadioChanged()()" />
+                : Find Room
                  </label>
             </div>
             <br>
@@ -181,6 +185,7 @@ include ('session.php');
             <hr>          
             <from>
                 <input type="submit" id="join_room" name="join_room" value="Find Room" class="btn btn-default" disabled="" >
+                <input type="submit" id="leave_room" name="leave_room" value="Leave Room" class="btn btn-default" >
             </from>
             <div id="Join_room_name">
                 
@@ -197,7 +202,7 @@ include ('session.php');
             <br>
             <div >
                 <form >    
-                <input name="msg" id="msg" type="text" class="form-control" placeholder=" Send you word ">
+                <input name="msg" id="msg" type="text" class="form-control" placeholder=" Send You Word ">
                 <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-default">
                 <p style="color: red" id="LetterM"></p>
                 </form>
