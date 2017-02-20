@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
                 
 		if ($rows == 1) {
 		$_SESSION['login_user']=$username; // Initializing Session
-                $query = mysqli_query($conn,"UPDATE login SET stat=1 WHERE username = '$username'" );//update stat
+                 mysqli_query($conn,"UPDATE login SET stat=1 WHERE username = '$username'" );//update stat
                     
 		header("location: profile.php"); // Redirecting To Other Page
 		} else {

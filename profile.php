@@ -125,7 +125,8 @@ include ('session.php');
 			setInterval(function () {
 				$('#chat_box').load('chat.php');}, 1500);
 		});
-                
+           </script>
+           <script type="text/javascript">
                 //Radio Changed
               function RadioChanged() { 
           if (document.getElementById("radioCR").checked === true) {
@@ -134,13 +135,14 @@ include ('session.php');
         $('#CreateRoom').prop("disabled",false);
         $('#Create_room-name').prop("disabled",false);
         $('#join_room').prop("disabled",true);
+        $('#leave_room').prop("disabled",true);
             } else {
         document.getElementById("radioCR").value = 0;
         document.getElementById("radioFR").value = 1;
          $('#CreateRoom').prop("disabled",true);
          $('#Create_room-name').prop("disabled",true);
          $('#join_room').prop("disabled",false);
-         
+         $('#leave_room').prop("disabled",false);
             }
 }     
               
@@ -207,22 +209,8 @@ include ('session.php');
                 <p style="color: red" id="LetterM"></p>
                 </form>
 
-            </div>
-             <?php 
-             include('conm.php');
-               $query  = "SELECT room_userid FROM room_mm WHERE Room_stat = 1 AND room_userid != 1 ORDER BY RAND() LIMIT 1";
-               $resultt= mysqli_query($conn, $query);
-//               $row = mysqli_fetch_array($resultt, MYSQLI_ASSOC);
-                       $row = mysqli_fetch_assoc($resultt);
+            </div >
 
-          
-         //but it in array
-//         $room_rows = mysqli_fetch_array($room_query);
-         //pick rondom id
-//         $rondom_id = array_rand($room_if_from_array,1);
-           echo "text id : ". $row["room_userid"];
-        
-         ?>  
          </div>
         </div>
         
