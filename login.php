@@ -1,4 +1,3 @@
-
 <?php
 session_start(); // Starting Session
 
@@ -26,16 +25,15 @@ if (isset($_POST['submit'])) {
 		$password = mysqli_real_escape_string($conn, $password);
 
 		// SQL query to fetch information of registerd users and finds user match.
-		$query = mysqli_query($conn, "select * from login where password='$password' AND username='$username'");
-		$rows =  mysqli_num_rows($query);
-                
+		$query= mysqli_query($conn, "select * from login where password='$password' AND username='$username'");
+		$rows = mysqli_num_rows($query);
+                   
 		if ($rows == 1) {
-		$_SESSION['login_user']=$username; // Initializing Session
-                 mysqli_query($conn,"UPDATE login SET stat=1 WHERE username = '$username'" );//update stat
                     
+		$_SESSION['login_user']=$username; // Initializing Session
 		header("location: profile.php"); // Redirecting To Other Page
 		} else {
-			$error = "Username or Password is invalid";
+			$error = "Username or Password is invalid ";
 		}
 		mysqli_close($conn); // Closing Connection
 	}

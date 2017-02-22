@@ -48,20 +48,20 @@ include ('session.php');
                 });
               };
           });
-        });  
+        });
               
                 
          // Create room name and deleat it
           $("document").ready(function(){
             
             $("#CreateRoom").click(function(){
-              if( !$('#Create_room-name').val().length === 0 ,$('#Create_room-name').val().length >= 25 ) {
-                  
+              if( !$('#Create_room_name').val().length === 0 ,$('#Create_room_name').val().length >= 25 ) {
+                   $('#alrt_text').val("Write room name");
               }else
               {
-              var rname = $("#Create_room-name").val();
+              var rname = $("#Create_room_name").val();
              $.ajax({
-                 url: "Create_room.php",
+                 url: "create_room.php",
                  type:"POST",
                  async: false,
                  data:{
@@ -70,7 +70,7 @@ include ('session.php');
                  },
                  success: function(d){
                     $("#Room_create_name").html(d);
-//                    location.reload();
+
                     }
                 });
               };
@@ -79,24 +79,41 @@ include ('session.php');
             // cancel Room or deleat it
               $("document").ready(function(){
             
-                $("#delt_room").click(function(){
+                $("#deleat_room").click(function(){
                   $.ajax({
                  url: "room_delt.php",
                  type:"POST",
                  async: false,
                  data:{
-                     "deleat_room-did": 1
+                     "deleat_room_did": 1
                  },
                  success: function(rd){
-                    $("#delt_room").html(rd);
-//                    location.reload();
+                    $("#Room_create_name").html(rd);
+
                     }
                 });
          });
          
        });
+         //leave chat
+                       $("document").ready(function(){
+            
+                $("#leave_room").click(function(){
+                  $.ajax({
+                 url: "room_delt.php",
+                 type:"POST",
+                 async: false,
+                 data:{
+                     "leave_room_did": 1
+                 },
+                 success: function(rd){
+                    $("#Join_room_name").html(rd);
+
+                    }
+                });
+         });
          
-         
+       });
        // Find Room
           $("document").ready(function(){
             
@@ -133,14 +150,16 @@ include ('session.php');
         document.getElementById("radioCR").value = 1;
         document.getElementById("radioFR").value = 0;
         $('#CreateRoom').prop("disabled",false);
-        $('#Create_room-name').prop("disabled",false);
+        $('#Create_room_name').prop("disabled",false);
+        $('#deleat_room').prop("disabled",false);
         $('#join_room').prop("disabled",true);
         $('#leave_room').prop("disabled",true);
             } else {
         document.getElementById("radioCR").value = 0;
         document.getElementById("radioFR").value = 1;
          $('#CreateRoom').prop("disabled",true);
-         $('#Create_room-name').prop("disabled",true);
+         $('#Create_room_name').prop("disabled",true);
+         $('#deleat_room').prop("disabled",true);
          $('#join_room').prop("disabled",false);
          $('#leave_room').prop("disabled",false);
             }
@@ -167,27 +186,28 @@ include ('session.php');
                 <label>Chose between : Create Room or Find Room </label>
                 <br>
                 <label>
-                    <input id="radioCR" type="radio" name="Chose" value="1" onchange="RadioChanged()()"  checked=""/>
+                    <input id="radioCR" type="radio" name="Chose" value="1" onchange="RadioChanged()"  checked=""/>
                 : Create Room
                 </label>&nbsp;&nbsp;&nbsp;
                 <label>
-                   <input id="radioFR" type="radio" name="Chose" value="0" onchange="RadioChanged()()" />
+                   <input id="radioFR" type="radio" name="Chose" value="0" onchange="RadioChanged()" />
                 : Find Room
                  </label>
             </div>
             <br>
                 <from>
-                    <input id="CreateRoom"  name="searchRoom" type="submit" value="Create Room Name"  class="btn btn-default">
-                    <input id="Create_room-name" name="plyername" type="text" >
-<!--                    <label id="Room_create_name" style="color:green;"></label>-->
+                    <input id="CreateRoom"  name="CreateRoom" type="submit" value="Create Room Name"  class="btn btn-default">&nbsp;
+                    <input id="Create_room_name" name="plyername" type="text" > &nbsp;&nbsp;&nbsp;
+                    <label id="alrt_text" name="alrt_text" style="color: red;"></label>
+                    <input type="submit" id="deleat_room" name="deleat_room" value="Leave Room" class="btn btn-default" >
                  </from>
             <div id="Room_create_name">
                 
             </div>
             <hr>          
             <from>
-                <input type="submit" id="join_room" name="join_room" value="Find Room" class="btn btn-default" disabled="" >
-                <input type="submit" id="leave_room" name="leave_room" value="Leave Room" class="btn btn-default" >
+                <input type="submit" id="join_room" name="join_room" value="Find Room" class="btn btn-default" disabled="" >&nbsp;
+                <input type="submit" id="leave_room" name="leave_room" value="Leave Chat" class="btn btn-default" disabled="" >
             </from>
             <div id="Join_room_name">
                 
