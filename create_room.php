@@ -2,7 +2,7 @@
 session_start();
 include('conm.php');
              
-       if(isset($_POST['Create_room-did'])){ 
+       if(isset($_POST['Create_room_did'])){ 
            
               $login_sid = $_SESSION['login_id'];
               $login_sname =$_SESSION['login_user'];
@@ -21,7 +21,7 @@ include('conm.php');
                $key = $login_sname . $login_sid . time() ;
                $key = sha1($key);
                //update it 
-               mysqli_query($conn, "UPDATE room_mm SET room_name='$new_room_name',Room_stat=1,room_id='$key' WHERE room_userid = $login_sid");
+               mysqli_query($conn, "UPDATE room_mm SET room_name='$new_room_name',Room_stat=1,room_id='$key',player1=1,date = NOW() WHERE room_userid = $login_sid");
                //add to session
                $_SESSION['Chat_gorp_id'] = $key;
                //note the user
@@ -36,7 +36,7 @@ include('conm.php');
                $key = $login_sname . $login_sid . time() ;
                $key = sha1($key);
                //create room in table
-                mysqli_query($conn, "INSERT INTO room_mm(room_userid, room_name, Room_stat, room_id) VALUES ($login_sid,'$new_room_name',1,'$key')");    
+                mysqli_query($conn, "INSERT INTO room_mm(room_userid, room_name, Room_stat, room_id,player1) VALUES ($login_sid,'$new_room_name',1,'$key',1)");    
                //note the user
                 mysqli_query($conn, "INSERT INTO message (user,text,convid) VALUES('Bot','Witeing for sameone to Join!','$key')");
                //add to session

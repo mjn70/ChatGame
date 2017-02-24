@@ -27,8 +27,8 @@ include ('session.php');
             // send message
          $("document").ready(function(){
 
-            $("#submit").click(function(){
-                
+            $("#submit").click(function($e){
+                $e.preventDefault();
               if( !$('#msg').val().length === 0 ,$('#msg').val().length >= 25 ) {
                   $('#LetterM').val("white a word to sund!!")
               }else
@@ -44,6 +44,7 @@ include ('session.php');
                     },
                     success: function(data){
                         $("#mesg").val('');
+                        $("#msg").val('');
                     }
                 });
               };
@@ -55,7 +56,7 @@ include ('session.php');
           $("document").ready(function(){
             
             $("#CreateRoom").click(function(){
-              if( !$('#Create_room_name').val().length === 0 ,$('#Create_room_name').val().length >= 25 ) {
+              if( !$('#Create_room_name').val().length === 0 ,$('#Create_room_name').val().length >= 20 ) {
                    $('#alrt_text').val("Write room name");
               }else
               {
@@ -65,12 +66,12 @@ include ('session.php');
                  type:"POST",
                  async: false,
                  data:{
-                     "Create_room-did": 1,
+                     "Create_room_did": 1,
                      "Room_name": rname
                  },
                  success: function(d){
                     $("#Room_create_name").html(d);
-
+                      window.location.href = "game.php";
                     }
                 });
               };
@@ -89,7 +90,7 @@ include ('session.php');
                  },
                  success: function(rd){
                     $("#Room_create_name").html(rd);
-
+                     
                     }
                 });
          });
@@ -100,15 +101,15 @@ include ('session.php');
             
                 $("#leave_room").click(function(){
                   $.ajax({
-                 url: "room_delt.php",
+                 url: "checkgaem_stat.php",
                  type:"POST",
                  async: false,
                  data:{
                      "leave_room_did": 1
                  },
-                 success: function(rd){
-                    $("#Join_room_name").html(rd);
-
+                 success: function(lc){
+                    $("#Join_room_name").html(lc);
+                  
                     }
                 });
          });
@@ -134,6 +135,46 @@ include ('session.php');
             });
 
          });
+         
+         //go to game room
+         $("document").ready(function(){
+            $("#readyJR").click(function(){
+                $.ajax({
+                    url: "checkgame_stat.php",
+                    type: "POST",
+                    async: false,
+                    data:{
+                        "ready": 1
+                    },
+                    success:function(response){
+                        $("#testp").html();
+              if (response = 0){
+                        //coundown to start the game 
+              var counter = 5;
+              var interval = setInterval(function() {
+                  counter--;
+                    // Display counterdown after 0 do
+                 if (counter === 0) {
+                    //alert 
+                    document.getElementById('testp').innerHTML = "Joining ....";
+                    window.location.href = "game.php";
+                   clearInterval(interval);
+                       }else{
+                      document.getElementById('testp').innerHTML = "After "+ counter + " sec Start game";  
+                       }
+                       
+                    }, 1500);
+                } if(response = 1){
+                      document.getElementById('testp').innerHTML = "Room Not ready";
+                }
+            }
+                      
+                });
+                
+            });
+
+         });
+ 
          
         </script>
         <script type="text/javascript">
@@ -199,15 +240,18 @@ include ('session.php');
                     <input id="CreateRoom"  name="CreateRoom" type="submit" value="Create Room Name"  class="btn btn-default">&nbsp;
                     <input id="Create_room_name" name="plyername" type="text" > &nbsp;&nbsp;&nbsp;
                     <label id="alrt_text" name="alrt_text" style="color: red;"></label>
-                    <input type="submit" id="deleat_room" name="deleat_room" value="Leave Room" class="btn btn-default" >
+                    <input type="submit" id="deleat_room" name="deleat_room" value="Leave Room" class="btn btn-default" >&nbsp;&nbsp;
+<!--                    <input type="submit" id="readyCR" name="readyCR" value="ready" class="btn btn-default" disabled="" >-->
                  </from>
             <div id="Room_create_name">
                 
             </div>
+            <br>
             <hr>          
             <from>
                 <input type="submit" id="join_room" name="join_room" value="Find Room" class="btn btn-default" disabled="" >&nbsp;
-                <input type="submit" id="leave_room" name="leave_room" value="Leave Chat" class="btn btn-default" disabled="" >
+                <input type="submit" id="leave_room" name="leave_room" value="Leave Chat" class="btn btn-default" disabled="" >&nbsp;&nbsp;
+                <input type="submit" id="readyJR" name="readyJR" value="ready" class="btn btn-default"  disabled="">
             </from>
             <div id="Join_room_name">
                 
@@ -230,7 +274,27 @@ include ('session.php');
                 </form>
 
             </div >
-
+            <div id="test">
+                <p style="color: green; font-size: 35px; " id="testp"></p>
+            </div>
+            <script type="text/javascript"> 
+//              window.onload = function(){
+//              var counter = 5;
+//              var interval = setInterval(function() {
+//                  counter--;
+//                    // Display 'counter' wherever you want to display it.
+//                 if (counter === 0) {
+//                    // Display a login box
+//                    document.getElementById('testp').innerHTML =  " Dn now go go";
+//                   clearInterval(interval);
+////                 window.location.href = "game.php";
+//                       }else{
+//                           document.getElementById('testp').innerHTML = counter + " sec";
+//                       }
+//                       
+//                    }, 1500);
+//          };
+                </script>  
          </div>
         </div>
         
