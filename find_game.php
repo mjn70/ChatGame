@@ -2,7 +2,7 @@
 session_start();
 include('conm.php');
 
-  if(isset($_POST['find_room'])){ 
+  if(isset($_POST['find_game'])){ 
        $login_sid = $_SESSION['login_id'];
        $login_sname =$_SESSION['login_user'];
        
@@ -24,7 +24,6 @@ include('conm.php');
           //add to session
          $_SESSION['Chat_gorp_id'] = $room_key;
          //Nov the chat 
-         mysqli_query($conn,"INSERT INTO message (user,text,convid) VALUES('$login_sname','Has Join The Room','$room_key')");
             // retoren with succses
            echo "<label style='color:green;'>Succses !!! Room Name : " . $room_name . "</label>";
       } else {

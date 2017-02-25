@@ -56,9 +56,11 @@ include ('session.php');
           $("document").ready(function(){
             
             $("#CreateRoom").click(function(){
-              if( !$('#Create_room_name').val().length === 0 ,$('#Create_room_name').val().length >= 20 ) {
-                   $('#alrt_text').val("Write room name");
-              }else
+              if( !$('#Create_room_name').val()) {
+                   $('#alrt_text').text("Write room name!!");
+               }else if ($('#Create_room_name').val().length >= 20){
+                   $('#alrt_text').text("name most be less thin 20 leter"); 
+               }else
               {
               var rname = $("#Create_room_name").val();
              $.ajax({
@@ -121,14 +123,15 @@ include ('session.php');
             $("#join_room").click(function(){
 
              $.ajax({
-                 url: "join_room.php",
+                 url: "find_game.php",
                  type:"POST",
                  async: false,
                  data:{
-                     "find_room": 1     
+                     "find_game": 1     
                  },
                  success: function(fr){
-                    $("#Join_room_name").html(fr);  
+                    $("#Join_room_name").html(fr); 
+                    $('#readyJR').prop("disabled",false);  
                     }
                 });
                 
@@ -136,53 +139,37 @@ include ('session.php');
 
          });
          
-         //go to game room
-         $("document").ready(function(){
-            $("#readyJR").click(function(){
-                $.ajax({
-                    url: "checkgame_stat.php",
-                    type: "POST",
-                    async: false,
-                    data:{
-                        "ready": 1
-                    },
-                    success:function(response){
-                        $("#testp").html();
-              if (response = 0){
-                        //coundown to start the game 
-              var counter = 5;
-              var interval = setInterval(function() {
-                  counter--;
-                    // Display counterdown after 0 do
-                 if (counter === 0) {
-                    //alert 
-                    document.getElementById('testp').innerHTML = "Joining ....";
-                    window.location.href = "game.php";
-                   clearInterval(interval);
-                       }else{
-                      document.getElementById('testp').innerHTML = "After "+ counter + " sec Start game";  
-                       }
-                       
-                    }, 1500);
-                } if(response = 1){
-                      document.getElementById('testp').innerHTML = "Room Not ready";
-                }
-            }
-                      
-                });
-                
-            });
-
-         });
+//         //player ready 
+//         $("document").ready(function(){
+//            $("#readyJR").click(function(){
+//                $.ajax({
+//                    url: "ready_to join_game.php",
+//                    type: "POST",
+//                    async: false,
+//                    data:{
+//                        "ready": 1
+//                    },
+//                    success:function(response){
+//                        $("#testp").html();
+//                    document.getElementById('testp').innerHTML = "Joining ....";
+//                   window.location.href = "game.php";
+//
+//                               }
+//                      
+//                });
+//                
+//            });
+//
+//         });
  
          
         </script>
         <script type="text/javascript">
-            // refresh chat every sec 
-		$(document).ready(function() {
-			setInterval(function () {
-				$('#chat_box').load('chat.php');}, 1500);
-		});
+//            // refresh chat every sec 
+//		$(document).ready(function() {
+//			setInterval(function () {
+//				$('#chat_box').load('chat.php');}, 1500);
+//		});
            </script>
            <script type="text/javascript">
                 //Radio Changed
@@ -238,9 +225,9 @@ include ('session.php');
             <br>
                 <from>
                     <input id="CreateRoom"  name="CreateRoom" type="submit" value="Create Room Name"  class="btn btn-default">&nbsp;
-                    <input id="Create_room_name" name="plyername" type="text" > &nbsp;&nbsp;&nbsp;
-                    <label id="alrt_text" name="alrt_text" style="color: red;"></label>
-                    <input type="submit" id="deleat_room" name="deleat_room" value="Leave Room" class="btn btn-default" >&nbsp;&nbsp;
+                    <input id="Create_room_name" name="Create_room_name" type="text" > &nbsp;&nbsp;&nbsp;
+                    <label  style="color: red;"><P id="alrt_text" name="alrt_text"></P></label>
+<!--                    <input type="submit" id="deleat_room" name="deleat_room" value="Leave Room" class="btn btn-default" >&nbsp;&nbsp;-->
 <!--                    <input type="submit" id="readyCR" name="readyCR" value="ready" class="btn btn-default" disabled="" >-->
                  </from>
             <div id="Room_create_name">
@@ -250,8 +237,8 @@ include ('session.php');
             <hr>          
             <from>
                 <input type="submit" id="join_room" name="join_room" value="Find Room" class="btn btn-default" disabled="" >&nbsp;
-                <input type="submit" id="leave_room" name="leave_room" value="Leave Chat" class="btn btn-default" disabled="" >&nbsp;&nbsp;
-                <input type="submit" id="readyJR" name="readyJR" value="ready" class="btn btn-default"  disabled="">
+<!--                <input type="submit" id="leave_room" name="leave_room" value="Leave Chat" class="btn btn-default" disabled="" >&nbsp;&nbsp;-->
+                <input type="submit" id="readyJR" name="readyJR" value="ready to join" class="btn btn-default"  disabled="">
             </from>
             <div id="Join_room_name">
                 
@@ -268,8 +255,8 @@ include ('session.php');
             <br>
             <div >
                 <form >    
-                <input name="msg" id="msg" type="text" class="form-control" placeholder=" Send You Word ">
-                <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-default">
+                <input name="msg" id="msg" type="text" class="form-control" placeholder=" Send You Word " disabled="">
+                <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-default" disabled="">
                 <p style="color: red" id="LetterM"></p>
                 </form>
 

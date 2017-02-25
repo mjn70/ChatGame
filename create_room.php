@@ -38,7 +38,7 @@ include('conm.php');
                //create room in table
                 mysqli_query($conn, "INSERT INTO room_mm(room_userid, room_name, Room_stat, room_id,player1) VALUES ($login_sid,'$new_room_name',1,'$key',1)");    
                //note the user
-                mysqli_query($conn, "INSERT INTO message (user,text,convid) VALUES('Bot','Witeing for sameone to Join!','$key')");
+               mysqli_query($conn, "INSERT INTO message (user,text,convid) VALUES('Bot','Witeing for sameone to Join!','$key')");
                //add to session
                $_SESSION['Chat_gorp_id'] = $key;
                //note the user

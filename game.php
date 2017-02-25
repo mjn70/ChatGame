@@ -3,16 +3,24 @@
 include ('checkuser.php');
 ?>
 <?php 
+//cget room info
  $game_key = $_SESSION['Chat_gorp_id'];
-$game_info = mysqli_query($conn, "SELECT * FROM `room_mm` WHERE room_id = '$game_key'");
+$game_info = mysqli_query($conn, "SELECT * FROM room_mm WHERE room_id = '$game_key'");
 $fetch_info = mysqli_fetch_array($game_info);
 $rgame_name = $fetch_info["room_name"];
+$user_type_id = $fetch_info["room_userid"];
 $game_time = $fetch_info["date"];
-
+//check user type host or player
+$check_user_type = mysqli_query($conn, "SELECT id FROM login WHERE id = $user_type_id");
+$row = mysqli_num_rows($check_user_type);
+if ($row == 1){
+    $check_id = "";
+}else{
+      $check_id = "disabled";
+}
 ?>
 <html>
     <head>
-        <meta charset="UTF-8">
         <title>Chat Game</title>
         
         <meta name="viewport" content="width=devicewidth,initial-scale=1">  
@@ -32,7 +40,16 @@ $game_time = $fetch_info["date"];
         <!-- JavaScript -->
         <script src="script.js" ></script>
          <script type="text/javascript">
-         // cancel Room or deleat it
+         //check user type host or player   
+              $(window).on("load",function(){
+                var checkid = <?php echo $check_id ?> ;
+                if(checkid === 0){
+                $('#Strat the game').prop("disabled",true);
+                }else if (checkid === 1){
+                    $('#Strat the game').prop("disabled",false);
+                }
+});
+         // cancel Room or deleat it and Quit game
               $("document").ready(function(){
             
                 $("#back_to_prof").click(function(){
@@ -41,19 +58,27 @@ $game_time = $fetch_info["date"];
                  type:"POST",
                  async: false,
                  data:{
-                     "deleat_room_did": 1
+                     "quit_game": 1
                  },
-                 success: function(rd){
-                    $("#back_mesg").html(rd);
-                     window.location.href = "porfile.php";
-                    }
-                });
+                 success: function(responseq){
+                    $("#back_mesg").html(responseq);
+                  window.location.href = "profile.php";
+                          } 
+               });
          });
-         
        });
-
-
+        
+        //strat the gaem
+        
+        
          </script>
+                 <script type="text/javascript">
+            // refresh game chat every sec 
+		$(document).ready(function() {
+			setInterval(function () {
+				$('#game_box').load('game_chat.php');}, 1500);
+		});
+           </script>
     </head>
     <body>
           <div  class="container">
@@ -61,16 +86,21 @@ $game_time = $fetch_info["date"];
             <b id="welcome">Welcome : <i><?php echo $login_session; ?></i></b>
         <br/>
         <from>
-        <b id="oppent"><a id="back_to_prof" href="profile.php">Leave the Game </a></b>
-        <p id="back_mesg"></p>
-        </from>
-        <br>
+            <b><input type="submit" value="Quiting..!" name="back_to_prof" id="back_to_prof" name="back_to_prof" class="btn btn-default"></b>
+        </from>   
+        <p id="back_mesg"></p>      
         <p><?php echo "Room Name : ".$rgame_name;?></p>
-        <br>
-        <p><?php echo "Time add in : ".$game_time;?></p>
+        <p><?php echo "Time Add in : ".$game_time;?></p>
         </div>
-              
-              
+              <from>
+                  <input type="submit" id="readyg" name="readyg" value="Strat the game" class="btn btn-default"  <?php echo $check_id ?> >
+              </from>      
+              <p id="testp"></p>
+                  <hr>
+                <div id="game_box">
+                    
+                </div>
+            <hr>  
           </div>
     </body>
 </html>

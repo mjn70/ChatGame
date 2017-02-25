@@ -6,7 +6,7 @@ include('conm.php');
               
   if(isset($_POST['deleat_room_did'])){ 
            //check if room was in table
-           $check_room = mysqli_query($conn, "SELECT * FROM `room_mm` WHERE room_userid = $login_sid");
+           $check_room = mysqli_query($conn, "SELECT * FROM room_mm WHERE room_userid = $login_sid");
             if(mysqli_num_rows($check_room)>= 1){
                 //get huy room
                  $convid_key = $_SESSION['Chat_gorp_id'];
@@ -30,7 +30,7 @@ include('conm.php');
 }
   if(isset($_POST['leave_room_did'])){ 
            //check if room was in table
-           $check_room = mysqli_query($conn, "SELECT * FROM `room_mm` WHERE room_userid = $login_sid");
+           $check_room = mysqli_query($conn, "SELECT * FROM room_mm WHERE room_userid = $login_sid");
             if(mysqli_num_rows($check_room)>= 1){
                 //get huy room
                  $convid_key = $_SESSION['Chat_gorp_id'];
@@ -52,6 +52,53 @@ include('conm.php');
             }
     
 }     
-
+  if(isset($_POST['deleat_room_did'])){ 
+           //check if room was in table
+           $check_room = mysqli_query($conn, "SELECT * FROM room_mm WHERE room_userid = $login_sid");
+            if(mysqli_num_rows($check_room)>= 1){
+                //get huy room
+                 $convid_key = $_SESSION['Chat_gorp_id'];
+                //deleat user room
+                mysqli_query($conn, "DELETE FROM room_mm WHERE room_userid = $login_sid ");
+                //deleat messages from table
+                mysqli_query($conn, "DELETE FROM message WHERE convid ='$convid_key'"); 
+                //resat seesion
+                $_SESSION['Chat_gorp_id'] = NULL;
+                 // retoren with succses
+                 echo "<div class='alert alert-danger' role='alert'>"
+                  ."<strong>Room Deleated</strong> you room hes beeing remove."
+                  ."</div>";
+            } else {
+                 // retoren with succses
+                 echo "<div class='alert alert-info' role='alert'>"
+                  ."<strong>No room Find</strong> you need to Create a Room."
+                  ."</div>";
+            }
+    
+}
+  if(isset($_POST['quit_game'])){ 
+           //check if room was in table
+           $check_room = mysqli_query($conn, "SELECT * FROM room_mm WHERE room_userid = $login_sid");
+            if(mysqli_num_rows($check_room)>= 1){
+                //get huy room
+                 $convid_key = $_SESSION['Chat_gorp_id'];
+                //deleat user room
+                mysqli_query($conn, "DELETE FROM room_mm WHERE room_userid = $login_sid ");
+                //deleat messages from table
+                mysqli_query($conn, "DELETE FROM message WHERE convid ='$convid_key'"); 
+                //resat seesion
+                $_SESSION['Chat_gorp_id'] = NULL;
+                 // retoren with succses
+                  echo "<div class='alert alert-danger' role='alert'>"
+                  ."<strong>Quiting now</strong> you noew leaving ."
+                  ."</div>";
+            } else {
+                 // retoren with succses
+                 echo "<div class='alert alert-info' role='alert'>"
+                  ."<strong>Quiting now</strong> you noew leaving ."
+                  ."</div>";;
+            }
+    
+}     
 
 ?>

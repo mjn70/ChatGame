@@ -17,6 +17,8 @@ include('conm.php');
                 $player1_stat = $fetch_game_stat["player1"];
                 $player2_stat = $fetch_game_stat["player2"];
                 if($player1_stat == 1 && $player2_stat == 1){
+   mysqli_query($conn,"INSERT INTO message (user,text,convid) VALUES('$login_sname','Has Join The Game','$game_key')");
+
                     echo 1;
                 } else {
                    echo 0; 
