@@ -53,9 +53,9 @@ include('conm.php');
                 
             }
             // retoren with succses
-           echo "<label style='color:green;'>Succses !!! Room Name : " . $room_name . "</label>";
+           echo 1;
       } else {
-           echo "<label style='color:red;'>No Room Find Try Again </label>";
+           echo 0;
       }
       
       

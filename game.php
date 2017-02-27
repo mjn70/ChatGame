@@ -114,10 +114,10 @@ $game_time = $fetch_info["date"];
                    },
                   success: function(stat_res){
                       if(stat_res === 1){
-                           document.getElementById('testp').innerHTML = "NOW playeing !!";
+                          $("#testp").text("NOW playeing !!");
                          } 
                       else if(stat_res === 0){
-                          document.getElementById('testp').innerHTML = "need player 2  to play....";
+                         $("#testp").text("need player 2  to play....");
                       }
                    }   
                

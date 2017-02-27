@@ -19,7 +19,7 @@ $_SESSION['login_id'] =$row['id'];
 if(!isset($login_session) && (!isset($check_game_key)) ){
         
 	mysqli_close($conn); // Closing Connection
-	header('Location: game.php'); // Redirecting To Home Page
+	header('Location: profile.php'); // Redirecting To Home Page
 }
 
 ?>

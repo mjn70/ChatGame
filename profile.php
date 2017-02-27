@@ -129,11 +129,13 @@ include ('session.php');
                  data:{
                      "find_game": 1     
                  },
-                 success: function(fr){
-                    $("#Join_room_name").html(fr); 
-                      document.getElementById('testp').innerHTML = "Joining ....";
-                      window.location.href = "game_rule.php";
-//                    $('#readyJR').prop("disabled",false);  
+                 success: function(froom){
+                     if(froom === 1){                   
+                     $('#testp').val("Joining ....");
+                      window.location.href = "viewgame.php";
+                      }else if (froom === 0){
+                   $('#testp').val("NO Room....");;
+                      }
                     }
                 });
                 

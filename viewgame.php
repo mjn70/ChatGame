@@ -108,7 +108,7 @@ $game_time = $fetch_info["date"];
        // refreash last word
        $(document).ready(function(){
                 setInterval(function(){
-                    $('#l_word').load('L_wordt.php');}, 1500);
+                    $('#l_word').load('L_word.php');}, 1500);
     });            
          //refreash the game engin
            setInterval(function(){
@@ -156,7 +156,7 @@ $game_time = $fetch_info["date"];
             <div > 
                  <input name="text_word" id="text_word" type="text" class="form-control" placeholder=" Send You Word " disabled="">
                  <p id="LetterM" style="color: red;"></p>
-                 <input id="submit" type="submit" value="Sund you word" name="submit" class="btn btn-default" disabled="">
+                 <input id="sund_word" type="submit" value="Sund you word" name="sund_word" class="btn btn-default" disabled="">
                  <div id="l_word">
                          
                  </div>
