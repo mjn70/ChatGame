@@ -33,7 +33,7 @@ $game_time = $fetch_info["date"];
         <!-- JavaScript -->
         <script src="script.js" ></script>
          <script type="text/javascript">
-          // refreash frst word
+                       // refreash frst word
        $(document).ready(function(){
                 setInterval(function(){
                    $.ajax({
@@ -68,7 +68,7 @@ $game_time = $fetch_info["date"];
                     type:"POST",
                     async: false,
                     data:{
-                        "player1": 1,
+                        "player2": 1,
                         "last_word_text" : mesg
                     },
                     success: function(data){
@@ -79,20 +79,18 @@ $game_time = $fetch_info["date"];
               };
           });
         });
-
-
-
-
-         // cancel Room or deleat it and Quit game
-              $("document").ready(function(){
+  
+             
+        //leave the gaem
+                      $("document").ready(function(){
             
-                $("#back_to_prof").click(function(){
+                $("#leave_to_prof").click(function(){
                   $.ajax({
                  url: "room_delt.php",
                  type:"POST",
                  async: false,
                  data:{
-                     "quit_game": 1
+                     "leave_game": 1
                  },
                  success: function(responseq){
                     $("#back_mesg").html(responseq);
@@ -101,42 +99,18 @@ $game_time = $fetch_info["date"];
                });
          });
        });
-           //strat the game from host
-              $("document").ready(function(){
-                
-                $("#Strat_the_game").click(function(){
-                $.ajax({
-                   url:"strat_game.php",
-                   type:"POST",
-                   async:false,
-                   data:{
-                       "strat_game": 1      
-                   },
-                  success: function(stat_res){
-                      if(stat_res === 1){
-                           document.getElementById('testp').innerHTML = "NOW playeing !!";
-                         } 
-                      else if(stat_res === 0){
-                          document.getElementById('testp').innerHTML = "need player 2  to play....";
-                      }
-                   }   
-               
-                  });   
-              });  
-         });
-
-       // refresh game chat every sec 
-    $(document).ready(function(){
-            setInterval(function(){
-                    $('#game_box').load('game_chat.php');}, 1500);
-    });
-    
+                 
+        // refresh game chat every sec 
+		$(document).ready(function() {
+			setInterval(function () {
+				$('#game_box').load('game_chat.php');}, 1500);
+		});
        // refreash last word
        $(document).ready(function(){
                 setInterval(function(){
-                    $('#l_word').load('L_word.php');}, 1500);
+                    $('#l_word').load('L_wordt.php');}, 1500);
     });            
-           //refreash the game engin
+         //refreash the game engin
            setInterval(function(){
                
                 $.ajax({
@@ -167,16 +141,12 @@ $game_time = $fetch_info["date"];
             <b id="welcome">Welcome : <i><?php echo $login_session; ?></i></b>
         <br/>
         <from>
-            <b><input type="submit" value="Quiting..!" id="back_to_prof" name="back_to_prof" class="btn btn-default"></b>
+            <b><input type="submit" value="leave the gaemn..!" id="leave_to_prof" name="leave_to_prof" class="btn btn-default"></b>
         </from>   
         <p id="back_mesg"></p>      
         <p><?php echo "Room Name : ".$rgame_name;?></p>
         <p><?php echo "Time Add in : ".$game_time;?></p>
-        </div>
-              <from>
-                  <input type="submit" id="Strat_the_game" name="Strat_the_game" value="Strat the game" class="btn btn-default"  >
-                  <p id="game_stat"></p>
-              </from>      
+        </div>  
               <p id="testp"></p>
                   <hr>
                 <div id="game_box">
@@ -186,11 +156,10 @@ $game_time = $fetch_info["date"];
             <div > 
                  <input name="text_word" id="text_word" type="text" class="form-control" placeholder=" Send You Word " disabled="">
                  <p id="LetterM" style="color: red;"></p>
-                 <input id="sund_word" type="submit" value="Sund you word" name="sund_word" class="btn btn-default" disabled="">
+                 <input id="submit" type="submit" value="Sund you word" name="submit" class="btn btn-default" disabled="">
                  <div id="l_word">
                          
                  </div>
-            </div>
           </div>
     </body>
 </html>

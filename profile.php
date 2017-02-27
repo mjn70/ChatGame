@@ -25,34 +25,34 @@ include ('session.php');
 
         <script type="text/javascript">
             // send message
-         $("document").ready(function(){
-
-            $("#submit").click(function($e){
-                $e.preventDefault();
-              if( !$('#msg').val().length === 0 ,$('#msg').val().length >= 25 ) {
-                  $('#LetterM').val("white a word to sund!!")
-              }else
-              {  
-                var mesg = $("#msg").val();
-                $.ajax({
-                    url:"send.php",
-                    type:"POST",
-                    async: false,
-                    data:{
-                        "done": 1,
-                        "message_text" : mesg
-                    },
-                    success: function(data){
-                        $("#mesg").val('');
-                        $("#msg").val('');
-                    }
-                });
-              };
-          });
-        });
+//         $("document").ready(function(){
+//
+//            $("#submit").click(function($e){
+//                $e.preventDefault();
+//              if( !$('#msg').val().length === 0 ,$('#msg').val().length >= 25 ) {
+//                  $('#LetterM').val("white a word to sund!!")
+//              }else
+//              {  
+//                var mesg = $("#msg").val();
+//                $.ajax({
+//                    url:"send.php",
+//                    type:"POST",
+//                    async: false,
+//                    data:{
+//                        "done": 1,
+//                        "message_text" : mesg
+//                    },
+//                    success: function(data){
+//                        $("#mesg").val('');
+//                        $("#msg").val('');
+//                    }
+//                });
+//              };
+//          });
+//        });
               
                 
-         // Create room name and deleat it
+       // Create room name and deleat it
           $("document").ready(function(){
             
             $("#CreateRoom").click(function(){
@@ -79,8 +79,8 @@ include ('session.php');
               };
           });
         });
-            // cancel Room or deleat it
-              $("document").ready(function(){
+       // cancel Room or deleat it
+           $("document").ready(function(){
             
                 $("#deleat_room").click(function(){
                   $.ajax({
@@ -98,8 +98,8 @@ include ('session.php');
          });
          
        });
-         //leave chat
-                       $("document").ready(function(){
+       //leave chat
+          $("document").ready(function(){
             
                 $("#leave_room").click(function(){
                   $.ajax({
@@ -131,7 +131,9 @@ include ('session.php');
                  },
                  success: function(fr){
                     $("#Join_room_name").html(fr); 
-                    $('#readyJR').prop("disabled",false);  
+                      document.getElementById('testp').innerHTML = "Joining ....";
+                      window.location.href = "game_rule.php";
+//                    $('#readyJR').prop("disabled",false);  
                     }
                 });
                 
@@ -192,11 +194,7 @@ include ('session.php');
          $('#leave_room').prop("disabled",false);
             }
 }     
-              
-              
-              
-              
-           
+
           </script>
 </head>
 

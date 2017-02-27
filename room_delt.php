@@ -101,4 +101,28 @@ include('conm.php');
     
 }     
 
+  if(isset($_POST['leave_game'])){ 
+         //gem key
+           $game_key = $_SESSION['Chat_gorp_id'];
+           //check if room was in table
+           $check_room = mysqli_query($conn, "SELECT * FROM room_mm WHERE convid = '$game_key'");
+            if(mysqli_num_rows($check_room)>= 1){
+                //message to the host
+                mysqli_query($conn,"INSERT INTO message (user,text,convid) VALUES('Bot','player2 lift the game','$game_key')");
+                 //resat seesion
+                $_SESSION['Chat_gorp_id'] = NULL;
+                //resar the room
+                mysqli_query($conn, "UPDATE room_mm SET Room_stat=1,player1=1,player2=0,date = NOW() WHERE room_id = '$game_key'");
+                 // retoren with succses
+                  echo "<div class='alert alert-danger' role='alert'>"
+                  ."<strong>leaveing game</strong> you now leaving ."
+                  ."</div>";
+            } else {
+                 // retoren with succses
+                 echo "<div class='alert alert-info' role='alert'>"
+                  ."<strong>leaveing game</strong> you now leaving ."
+                  ."</div>";;
+            }
+    
+}     
 ?>
