@@ -44,7 +44,7 @@ $game_time = $fetch_info["date"];
                         "fword": 1    
                     },
                     success: function(data){
-                   var fr_word = data ;
+                   var fr_word = data.toString() ;
                    var fr_char = fr_word;  
                     }
                 });  
@@ -101,29 +101,25 @@ $game_time = $fetch_info["date"];
                });
          });
        });
+       
            //strat the game from host
-              $("document").ready(function(){
-                
-                $("#Strat_the_game").click(function(){
-                $.ajax({
-                   url:"strat_game.php",
-                   type:"POST",
-                   async:false,
-                   data:{
-                       "strat_game": 1      
-                   },
-                  success: function(stat_res){
-                      if(stat_res === 1){
-                          $("#testp").text("NOW playeing !!");
-                         } 
-                      else if(stat_res === 0){
-                         $("#testp").text("need player 2  to play....");
-                      }
-                   }   
-               
-                  });   
-              });  
-         });
+           function  startgame(){
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+              myObj = JSON.parse(this.responseText);
+              if($game_array.strat === 1){
+                      $("#testp").text("strating game ....");
+              }else if ($game_array.strat === 0){
+                      $("#testp").text("player 2 not ready!!....");
+                  }
+              }
+        }
+        
+        xmlhttp.open("POST", "strat_game.php", true);
+        xmlhttp.send();
+    };      
 
        // refresh game chat every sec 
     $(document).ready(function(){
@@ -137,26 +133,24 @@ $game_time = $fetch_info["date"];
                     $('#l_word').load('L_word.php');}, 1500);
     });            
            //refreash the game engin
-           setInterval(function(){
+            setInterval(function(){
                
-                $.ajax({
-                   url:"game_rule.php",
-                   type:"POST",
-                   async:false,
-                   data:{
-                       "game_rule": 1      
-                   },
-                  success: function(stat_tag){ 
-                    if(stat_tag === 1){
-                       $('#text_word').prop("disabled",false);
+           var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myObj = JSON.parse(this.responseText);
+              if(myObj.gamer === 1){  
+                        $('#text_word').prop("disabled",false);
                        $('#sund_word').prop("disabled",false);
-                   }else if (stat_tag === 0){
-                       $('#text_word').prop("disabled",true);
+              }else if (myObj.gamer === 0){
+                      $('#text_word').prop("disabled",true);
                        $('#sund_word').prop("disabled",true);
-                   } 
-               }
-      });    
-
+                  }
+              }
+        }
+        
+        xmlhttp.open("POST", "game_rule.php", true);
+        xmlhttp.send();
     }, 1500);
 
            </script>
@@ -174,7 +168,7 @@ $game_time = $fetch_info["date"];
         <p><?php echo "Time Add in : ".$game_time;?></p>
         </div>
               <from>
-                  <input type="submit" id="Strat_the_game" name="Strat_the_game" value="Strat the game" class="btn btn-default"  >
+                  <input type="submit" id="Strat_the_game" name="Strat_the_game" value="Strat the game" class="btn btn-default"  onclick="startgame()">
                   <p id="game_stat"></p>
               </from>      
               <p id="testp"></p>

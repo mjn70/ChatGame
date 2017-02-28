@@ -44,7 +44,7 @@ $game_time = $fetch_info["date"];
                         "fword": 1    
                     },
                     success: function(data){
-                   var fr_word = data ;
+                   var fr_word = data.toString() ;
                    var fr_char = fr_word;  
                     }
                 });  
@@ -110,27 +110,25 @@ $game_time = $fetch_info["date"];
                 setInterval(function(){
                     $('#l_word').load('L_word.php');}, 1500);
     });            
-         //refreash the game engin
+         //refreash the game rule
            setInterval(function(){
                
-                $.ajax({
-                   url:"game_rule.php",
-                   type:"POST",
-                   async:false,
-                   data:{
-                       "game_rule": 1      
-                   },
-                  success: function(stat_tag){ 
-                    if(stat_tag === 1){
-                       $('#text_word').prop("disabled",false);
+           var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myObj = JSON.parse(this.responseText);
+              if(myObj.gamer === 1){
+                        $('#text_word').prop("disabled",false);
                        $('#sund_word').prop("disabled",false);
-                   }else if (stat_tag === 0){
-                       $('#text_word').prop("disabled",true);
+              }else if (myObj.gamer === 0){
+                      $('#text_word').prop("disabled",true);
                        $('#sund_word').prop("disabled",true);
-                   } 
-               }
-      });    
-
+                  }
+              }
+        }
+        
+        xmlhttp.open("POST", "game_rule.php", true);
+        xmlhttp.send();
     }, 1500);
 
            </script>
@@ -141,7 +139,7 @@ $game_time = $fetch_info["date"];
             <b id="welcome">Welcome : <i><?php echo $login_session; ?></i></b>
         <br/>
         <from>
-            <b><input type="submit" value="leave the gaemn..!" id="leave_to_prof" name="leave_to_prof" class="btn btn-default"></b>
+            <b><input type="submit" value="leave the game..!" id="leave_to_prof" name="leave_to_prof" class="btn btn-default"></b>
         </from>   
         <p id="back_mesg"></p>      
         <p><?php echo "Room Name : ".$rgame_name;?></p>

@@ -118,30 +118,25 @@ include ('session.php');
          
        });
        // Find Room
-          $("document").ready(function(){
-            
-            $("#join_room").click(function(){
+          function  findgame(){
 
-             $.ajax({
-                 url: "find_game.php",
-                 type:"POST",
-                 async: false,
-                 data:{
-                     "find_game": 1     
-                 },
-                 success: function(froom){
-                     if(froom === 1){                   
-                     $('#testp').val("Joining ....");
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myObj = JSON.parse(this.responseText);
+              if(myObj.findg === 1){
+                      $("#testp").text("Joining ....");
                       window.location.href = "viewgame.php";
-                      }else if (froom === 0){
-                   $('#testp').val("NO Room....");;
-                      }
-                    }
-                });
-                
-            });
+              }else if (myObj.findg === 0){
+                      $("#testp").text("NO Room....");
+                  }
+              }
+        }
+        
+        xmlhttp.open("POST", "find_game.php", true);
+        xmlhttp.send();
+    };        
 
-         });
          
 //         //player ready 
 //         $("document").ready(function(){
@@ -236,7 +231,7 @@ include ('session.php');
             <br>
             <hr>          
             <from>
-                <input type="submit" id="join_room" name="join_room" value="Find Room" class="btn btn-default" disabled="" >&nbsp;
+                <input type="submit" id="join_room" name="join_room" value="Find Room" class="btn btn-default" disabled="" onclick="findgame()" >&nbsp;
 <!--                <input type="submit" id="leave_room" name="leave_room" value="Leave Chat" class="btn btn-default" disabled="" >&nbsp;&nbsp;-->
                 <input type="submit" id="readyJR" name="readyJR" value="ready to join" class="btn btn-default"  disabled="">
             </from>

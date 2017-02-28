@@ -5,6 +5,9 @@
         <group>
             <file>file:/C:/ChatGame/find_game.php</file>
             <file>file:/C:/ChatGame/profile.php</file>
+            <file>file:/C:/ChatGame/viewgame.php</file>
+            <file>file:/C:/ChatGame/strat_game.php</file>
+            <file>file:/C:/ChatGame/game.php</file>
         </group>
     </open-files>
 </project-private>

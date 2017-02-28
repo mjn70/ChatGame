@@ -7,7 +7,7 @@ include('conm.php');
            //get key room
             $game_key = $_SESSION['Chat_gorp_id'];
             
-  if(isset($_POST['game_rule'])){ 
+//  if(isset($_POST['game_rule'])){ 
       
       //check playing stat in table 
       $gamerule_q = mysqli_query($conn, "SELECT playing_stat,tag from room_mm WHERE room_id ='$game_key'");
@@ -17,12 +17,16 @@ include('conm.php');
           $game_stat = $fetch_gaem_info["playing_stat"];
           $play_tag = $fetch_gaem_info["tag"];
           if($game_stat == 1 || $play_tag == 1){
-              echo 1; 
+                $myObj->gamer = 1;
+            $myJSON = json_encode($myObj);
+            echo $myJSON; 
           } else if ($game_stat == 1 || $play_tag == 0)  {
-              echo 0;
+                $myObj->gamer = 0;
+            $myJSON = json_encode($myObj);
+            echo $myJSON;
           }
           
           
       }
-  }
+//  }
 ?>

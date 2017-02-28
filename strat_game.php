@@ -17,9 +17,15 @@ include('conm.php');
                 if($player1_stat == 1 && $player2_stat == 1){
                     //strat the gaem
                     mysqli_query($conn, "UPDATE room_mm SET playing_stat=1,tag=1 WHERE room_id ='$game_key'");
-                    echo 1;
+                    
+            $game_array->strat = 1;
+            $myJSON = json_encode($game_array);
+            echo $myJSON;
                 } else {
-                   echo 0; 
+                    
+            $game_array->strat = 0;
+            $myJSON = json_encode($game_array);
+            echo $myJSON; 
                 }
             } 
        }

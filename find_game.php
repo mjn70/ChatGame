@@ -2,7 +2,7 @@
 session_start();
 include('conm.php');
 
-  if(isset($_POST['find_game'])){ 
+//  if(isset($_POST['find_game_h'])){ 
        $login_sid = $_SESSION['login_id'];
        $login_sname =$_SESSION['login_user'];
         //deleet room if find in table
@@ -53,11 +53,16 @@ include('conm.php');
                 
             }
             // retoren with succses
-           echo 1;
+            $myObj->findg = 1;
+            $myJSON = json_encode($myObj);
+            echo $myJSON;
+//           echo "1";
       } else {
-           echo 0;
+             $myObj->findg = 0;
+            $myJSON = json_encode($myObj);
+            echo $myJSON;
       }
       
       
-      
-  }
+//      
+//  }
