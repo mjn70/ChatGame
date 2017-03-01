@@ -1,8 +1,8 @@
-<?php
+<?php //
 session_start();
 include('conm.php');
              
-     if(isset($_POST['strat_game'])){
+//     if(isset($_POST['strat_game'])){
             $login_sid = $_SESSION['login_id'];
             $login_sname =$_SESSION['login_user'];
            //get key room
@@ -18,16 +18,16 @@ include('conm.php');
                     //strat the gaem
                     mysqli_query($conn, "UPDATE room_mm SET playing_stat=1,tag=1 WHERE room_id ='$game_key'");
                     
-            $game_array->strat = 1;
-            $myJSON = json_encode($game_array);
+            $myObj->strat = 1;
+            $myJSON = json_encode($myObj);
             echo $myJSON;
                 } else {
                     
-            $game_array->strat = 0;
-            $myJSON = json_encode($game_array);
+            $myObj->strat = 0;
+            $myJSON = json_encode($myObj);
             echo $myJSON; 
                 }
             } 
-       }
+//       }
 
 ?>

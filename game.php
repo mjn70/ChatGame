@@ -33,6 +33,11 @@ $game_time = $fetch_info["date"];
         <!-- JavaScript -->
         <script src="script.js" ></script>
          <script type="text/javascript">
+             //golop
+             var L_WORD = "game";
+             
+             $("document").ready(function(){ 
+             
           // refreash frst word
        $(document).ready(function(){
                 setInterval(function(){
@@ -45,21 +50,22 @@ $game_time = $fetch_info["date"];
                     },
                     success: function(data){
                    var fr_word = data.toString() ;
-                   var fr_char = fr_word;  
+                   L_WORD = fr_word;  
                     }
                 });  
-               }, 1500);
+               }, 1000);
                   
-    });           
+    });         
+    
              //sund the word
-            $("document").ready(function(){ 
+//            $("document").ready(function(){ 
                 
             $("#sund_word").click(function($e){
                 $e.preventDefault();
-              if( !$('#text_word').text.trim().charAt(0) === fr_char ) {
-                  $('#LetterM').val("white a word to sund!!");
+              if( $('#text_word').val === L_WORD.charAt(0) ) {
+                  $('#sund_log').text("white a word to sund!!");
               }else if($('#text_word').val().length >= 15){
-                  $('#LetterM').val("you word must be less thin 15 letrs!!");
+                  $('#sund_log').text("you word must be less thin 15 letrs!!");
               }else
               {  
                 var mesg = $("#text_word").val();
@@ -73,15 +79,12 @@ $game_time = $fetch_info["date"];
                     },
                     success: function(data){
                        var ls = str.charAt(0);
-                       fr_word = ls;
+                       L_WORD = ls;
                     }
                 });
               };
           });
         });
-
-
-
 
          // cancel Room or deleat it and Quit game
               $("document").ready(function(){
@@ -108,30 +111,34 @@ $game_time = $fetch_info["date"];
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-              myObj = JSON.parse(this.responseText);
-              if($game_array.strat === 1){
+            myObj = JSON.parse(this.responseText);
+              if(myObj.strat === 1){
                       $("#testp").text("strating game ....");
-              }else if ($game_array.strat === 0){
+                      L_WORD = "game";
+              }else if (myObj.strat === 0){
                       $("#testp").text("player 2 not ready!!....");
                   }
               }
         }
         
-        xmlhttp.open("POST", "strat_game.php", true);
+        xmlhttp.open("GET", "strat_game.php", true);
         xmlhttp.send();
     };      
 
        // refresh game chat every sec 
     $(document).ready(function(){
             setInterval(function(){
-                    $('#game_box').load('game_chat.php');}, 1500);
+                    $('#game_box').load('game_chat.php');
+                     $('#l_word').load('L_word.php');
+    
+    }, 1500);
     });
     
-       // refreash last word
-       $(document).ready(function(){
-                setInterval(function(){
-                    $('#l_word').load('L_word.php');}, 1500);
-    });            
+//       // refreash last word
+//       $(document).ready(function(){
+//                setInterval(function(){
+//                    $('#l_word').load('L_word.php');}, 1500);
+//    });            
            //refreash the game engin
             setInterval(function(){
                
@@ -149,7 +156,7 @@ $game_time = $fetch_info["date"];
               }
         }
         
-        xmlhttp.open("POST", "game_rule.php", true);
+        xmlhttp.open("GET", "game_rule.php", true);
         xmlhttp.send();
     }, 1500);
 
@@ -177,6 +184,7 @@ $game_time = $fetch_info["date"];
                     
                 </div>
             <hr>
+            <p id="sund_log" style="color: brown;"></p>
             <div > 
                  <input name="text_word" id="text_word" type="text" class="form-control" placeholder=" Send You Word " disabled="">
                  <p id="LetterM" style="color: red;"></p>

@@ -33,7 +33,12 @@ $game_time = $fetch_info["date"];
         <!-- JavaScript -->
         <script src="script.js" ></script>
          <script type="text/javascript">
-                       // refreash frst word
+                   //golop
+             var L_WORD = "game";
+             
+             $("document").ready(function(){ 
+             
+          // refreash frst word
        $(document).ready(function(){
                 setInterval(function(){
                    $.ajax({
@@ -45,21 +50,22 @@ $game_time = $fetch_info["date"];
                     },
                     success: function(data){
                    var fr_word = data.toString() ;
-                   var fr_char = fr_word;  
+                   L_WORD = fr_word;  
                     }
                 });  
-               }, 1500);
+               }, 1000);
                   
-    });           
+    });         
+    
              //sund the word
-            $("document").ready(function(){ 
+//            $("document").ready(function(){ 
                 
             $("#sund_word").click(function($e){
                 $e.preventDefault();
-              if( !$('#text_word').text.trim().charAt(0) === fr_char ) {
-                  $('#LetterM').val("white a word to sund!!");
+              if( $('#text_word').val === L_WORD.charAt(0) ) {
+                  $('#sund_log').text("white a word to sund!!");
               }else if($('#text_word').val().length >= 15){
-                  $('#LetterM').val("you word must be less thin 15 letrs!!");
+                  $('#sund_log').text("you word must be less thin 15 letrs!!");
               }else
               {  
                 var mesg = $("#text_word").val();
@@ -68,12 +74,12 @@ $game_time = $fetch_info["date"];
                     type:"POST",
                     async: false,
                     data:{
-                        "player2": 1,
+                        "player1": 1,
                         "last_word_text" : mesg
                     },
                     success: function(data){
                        var ls = str.charAt(0);
-                       fr_word = ls;
+                       L_WORD = ls;
                     }
                 });
               };
@@ -103,13 +109,17 @@ $game_time = $fetch_info["date"];
         // refresh game chat every sec 
 		$(document).ready(function() {
 			setInterval(function () {
-				$('#game_box').load('game_chat.php');}, 1500);
-		});
+		     $('#game_box').load('game_chat.php');
+                     $('#l_word').load('L_word.php');
+    
+    }, 1500);
+    });
+    
        // refreash last word
-       $(document).ready(function(){
-                setInterval(function(){
-                    $('#l_word').load('L_word.php');}, 1500);
-    });            
+//       $(document).ready(function(){
+//                setInterval(function(){
+//                    $('#l_word').load('L_word.php');}, 1500);
+//    });            
          //refreash the game rule
            setInterval(function(){
                
@@ -117,17 +127,17 @@ $game_time = $fetch_info["date"];
         xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             myObj = JSON.parse(this.responseText);
-              if(myObj.gamer === 1){
+              if(myObj.gamer === 0){
                         $('#text_word').prop("disabled",false);
                        $('#sund_word').prop("disabled",false);
-              }else if (myObj.gamer === 0){
+              }else if (myObj.gamer === 1){
                       $('#text_word').prop("disabled",true);
                        $('#sund_word').prop("disabled",true);
                   }
               }
         }
         
-        xmlhttp.open("POST", "game_rule.php", true);
+        xmlhttp.open("GET", "game_rule.php", true);
         xmlhttp.send();
     }, 1500);
 

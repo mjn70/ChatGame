@@ -133,7 +133,7 @@ include ('session.php');
               }
         }
         
-        xmlhttp.open("POST", "find_game.php", true);
+        xmlhttp.open("GET", "find_game.php", true);
         xmlhttp.send();
     };        
 
