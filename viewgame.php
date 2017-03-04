@@ -32,40 +32,46 @@ $game_time = $fetch_info["date"];
         
         <!-- JavaScript -->
         <script src="script.js" ></script>
+        
          <script type="text/javascript">
                    //golop
-             var L_WORD = "game";
+                   
+//              var L_WORD = "game";       
+           
              
-             $("document").ready(function(){ 
-             
-          // refreash frst word
-       $(document).ready(function(){
-                setInterval(function(){
-                   $.ajax({
-                    url:"get_frst_word.php",
-                    type:"POST",
-                    async: false,
-                    data:{
-                        "fword": 1    
-                    },
-                    success: function(data){
-                   var fr_word = data.toString() ;
-                   L_WORD = fr_word;  
-                    }
-                });  
-               }, 1000);
-                  
-    });         
-    
+          // refreash frst word 
+          function lwordf(){
+       var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            myObj = JSON.parse(this.responseText);
+            if(myObj.lword !== ""){
+             L_WORD = myObj.lword;
+             L_WORD = L_WORD.charAt(0);
+              document.getElementById('l_word').innerHTML = "<div class='alert alert-success'><strong>Last Word was :  " + L_WORD + " </strong> </div>";
+             }else{
+              document.getElementById('l_word').innerHTML = "<div class='alert alert-info' role='alert'><strong>HOST must start the game</strong></div>";
+             }
+           }
+         };
+        xmlhttp.open("GET", "get_frst_word.php", true);
+        xmlhttp.send();
+        }
+
+    function stratloop(){  
+    mylop = setInterval(lwordf() , 1000);
+} 
+      </script>
+       <script type="text/javascript" >
              //sund the word
-//            $("document").ready(function(){ 
+            $("document").ready(function(){ 
                 
             $("#sund_word").click(function($e){
                 $e.preventDefault();
-              if( $('#text_word').val === L_WORD.charAt(0) ) {
-                  $('#sund_log').text("white a word to sund!!");
+              if( $('#text_word').val.charAt(0) === L_WORD ) {
+                  document.getElementById('sund_log').innerHTML = "white a word to sund!!";            
               }else if($('#text_word').val().length >= 15){
-                  $('#sund_log').text("you word must be less thin 15 letrs!!");
+                   document.getElementById('sund_log').innerHTML = "you word must be less thin 15 letrs!!";
               }else
               {  
                 var mesg = $("#text_word").val();
@@ -74,20 +80,21 @@ $game_time = $fetch_info["date"];
                     type:"POST",
                     async: false,
                     data:{
-                        "player1": 1,
-                        "last_word_text" : mesg
+                        "player2": 1,
+                        "last_word_view" : mesg
                     },
-                    success: function(data){
-                       var ls = str.charAt(0);
-                       L_WORD = ls;
+                    success: function(){
+                     document.getElementById('sund_log').innerHTML = mesg.charAt(0);
+                        
                     }
                 });
               };
           });
         });
   
-             
-        //leave the gaem
+           </script>
+       <script type="text/javascript" >
+        //leave the game
                       $("document").ready(function(){
             
                 $("#leave_to_prof").click(function(){
@@ -105,43 +112,49 @@ $game_time = $fetch_info["date"];
                });
          });
        });
-                 
+        </script>
+        
+               <script type="text/javascript" >     
         // refresh game chat every sec 
 		$(document).ready(function() {
 			setInterval(function () {
 		     $('#game_box').load('game_chat.php');
-                     $('#l_word').load('L_word.php');
+//                     $('#l_word').load('L_word.php');
     
-    }, 1500);
+    }, 1000);
     });
     
-       // refreash last word
-//       $(document).ready(function(){
-//                setInterval(function(){
-//                    $('#l_word').load('L_word.php');}, 1500);
-//    });            
+
+           </script>
+           <script type="text/javascript">         
          //refreash the game rule
-           setInterval(function(){
+         function refreashg(){
                
            var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            myObj = JSON.parse(this.responseText);
-              if(myObj.gamer === 0){
+        if (this.readyState === 4 && this.status === 200) {
+            myObjr = JSON.parse(this.responseText);
+              if(myObjr.gamer === 0){
                         $('#text_word').prop("disabled",false);
                        $('#sund_word').prop("disabled",false);
-              }else if (myObj.gamer === 1){
+              }else if (myObjr.gamer === 1){
                       $('#text_word').prop("disabled",true);
                        $('#sund_word').prop("disabled",true);
                   }
               }
-        }
+        };
         
         xmlhttp.open("GET", "game_rule.php", true);
         xmlhttp.send();
-    }, 1500);
+        }
+       refreashg();
+     setInterval(refreashg() , 1000);
+       </script>
+        <script type="text/javascript">   
 
-           </script>
+
+          </script>
+          </script>
     </head>
     <body>
           <div  class="container">
@@ -162,7 +175,7 @@ $game_time = $fetch_info["date"];
                 </div>
             <hr>
             <div > 
-                 <input name="text_word" id="text_word" type="text" class="form-control" placeholder=" Send You Word " disabled="">
+                 <input name="text_word" id="text_word" type="text" class="form-control" placeholder=" Send You Word " disabled="" >
                  <p id="LetterM" style="color: red;"></p>
                  <input id="sund_word" type="submit" value="Sund you word" name="sund_word" class="btn btn-default" disabled="">
                  <div id="l_word">

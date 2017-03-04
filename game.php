@@ -33,39 +33,49 @@ $game_time = $fetch_info["date"];
         <!-- JavaScript -->
         <script src="script.js" ></script>
          <script type="text/javascript">
-             //golop
-             var L_WORD = "game";
+             // teast the function 
              
-             $("document").ready(function(){ 
+//             var L_WORD = "game";
              
-          // refreash frst word
-       $(document).ready(function(){
-                setInterval(function(){
-                   $.ajax({
-                    url:"get_frst_word.php",
-                    type:"POST",
-                    async: false,
-                    data:{
-                        "fword": 1    
-                    },
-                    success: function(data){
-                   var fr_word = data.toString() ;
-                   L_WORD = fr_word;  
-                    }
-                });  
-               }, 1000);
-                  
-    });         
+             
+          // refreash frst word 
+              function lwordf(){
+           var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            myObj = JSON.parse(this.responseText);
+           if(myObj.lword !== ""){
+             L_WORD = myObj.lword;
+             L_WORD = L_WORD.charAt(0);
+              document.getElementById('l_word').innerHTML = "<div class='alert alert-success'><strong>Last Word was :  " + L_WORD + " </strong> </div>";
+             }else{
+              document.getElementById('l_word').innerHTML = "<div class='alert alert-info' role='alert'><strong>HOST must start the game</strong></div>";
+             }
+           }
+         };
+        xmlhttp.open("GET", "get_frst_word.php", true);
+        xmlhttp.send();
+        }
     
-             //sund the word
-//            $("document").ready(function(){ 
+       lwordf();
+       
+    function stratloop(){  
+    mylop = setInterval(lwordf() , 1000);
+} 
+         </script>
+       <script type="text/javascript" >
+                //sund the word
+            $("document").ready(function(){ 
                 
             $("#sund_word").click(function($e){
                 $e.preventDefault();
-              if( $('#text_word').val === L_WORD.charAt(0) ) {
-                  $('#sund_log').text("white a word to sund!!");
+              if( $('#text_word').text().charAt(0) === L_WORD ) {
+                  document.getElementById('sund_log').innerHTML = "white a word to sund!!";            
               }else if($('#text_word').val().length >= 15){
-                  $('#sund_log').text("you word must be less thin 15 letrs!!");
+                   document.getElementById('sund_log').innerHTML = "you word must be less thin 15 letrs!!";
+                   
+              }else if($('#text_word').val() === "game"){
+                   document.getElementById('sund_log').innerHTML = "game strated";
               }else
               {  
                 var mesg = $("#text_word").val();
@@ -75,17 +85,17 @@ $game_time = $fetch_info["date"];
                     async: false,
                     data:{
                         "player1": 1,
-                        "last_word_text" : mesg
+                        "last_word_game" : mesg
                     },
-                    success: function(data){
-                       var ls = str.charAt(0);
-                       L_WORD = ls;
+                    success: function(){
+                     document.getElementById('sund_log').innerHTML = mesg.charAt(0);
                     }
                 });
               };
           });
         });
-
+        </script>
+       <script type="text/javascript" >
          // cancel Room or deleat it and Quit game
               $("document").ready(function(){
             
@@ -104,49 +114,49 @@ $game_time = $fetch_info["date"];
                });
          });
        });
-       
+        </script>
+       <script type="text/javascript" >
            //strat the game from host
            function  startgame(){
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             myObj = JSON.parse(this.responseText);
               if(myObj.strat === 1){
                       $("#testp").text("strating game ....");
                       L_WORD = "game";
               }else if (myObj.strat === 0){
-                      $("#testp").text("player 2 not ready!!....");
+                      $("#testp").text("player 2 not ready!! Or noone JOIN!!.");
                   }
               }
-        }
+        };
         
         xmlhttp.open("GET", "strat_game.php", true);
         xmlhttp.send();
     };      
-
-       // refresh game chat every sec 
-    $(document).ready(function(){
-            setInterval(function(){
-                    $('#game_box').load('game_chat.php');
-                     $('#l_word').load('L_word.php');
+              </script>
+               <script type="text/javascript" >     
+        // refresh game chat every sec 
+		$(document).ready(function() {
+			setInterval(function () {
+		     $('#game_box').load('game_chat.php');
+//                     $('#l_word').load('L_word.php');
     
-    }, 1500);
+    }, 1000);
     });
     
-//       // refreash last word
-//       $(document).ready(function(){
-//                setInterval(function(){
-//                    $('#l_word').load('L_word.php');}, 1500);
-//    });            
-           //refreash the game engin
-            setInterval(function(){
+
+           </script>
+           <script type="text/javascript">         
+         //refreash the game rule
+         function refreashg(){
                
            var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             myObj = JSON.parse(this.responseText);
-              if(myObj.gamer === 1){  
+              if(myObj.gamer === 1){
                         $('#text_word').prop("disabled",false);
                        $('#sund_word').prop("disabled",false);
               }else if (myObj.gamer === 0){
@@ -154,13 +164,30 @@ $game_time = $fetch_info["date"];
                        $('#sund_word').prop("disabled",true);
                   }
               }
-        }
+        };
         
         xmlhttp.open("GET", "game_rule.php", true);
         xmlhttp.send();
-    }, 1500);
+        }
+       refreashg();
+       
+     setInterval(refreashg() , 1000);
 
-           </script>
+       </script>
+        <script type="text/javascript"> 
+             var L_WORD = "game";
+             var ss = "dd";
+          function chechlword(str){
+              if(str.charAt(0) === "game".charAt(0) ){
+               document.getElementById('LetterM').innerHTML = "send to play chat game !!";
+               return;
+           }else if(str.charAt(0) !== "game".charAt(0) ){
+               document.getElementById('LetterM').innerHTML = L_WORD;
+               return;
+                }
+            }
+
+          </script>
     </head>
     <body>
           <div  class="container">
@@ -186,7 +213,7 @@ $game_time = $fetch_info["date"];
             <hr>
             <p id="sund_log" style="color: brown;"></p>
             <div > 
-                 <input name="text_word" id="text_word" type="text" class="form-control" placeholder=" Send You Word " disabled="">
+                <input name="text_word" id="text_word" type="text" class="form-control" placeholder=" Send You Word " disabled="" onkeyup="chechlword(this.value)">
                  <p id="LetterM" style="color: red;"></p>
                  <input id="sund_word" type="submit" value="Sund you word" name="sund_word" class="btn btn-default" disabled="">
                  <div id="l_word">

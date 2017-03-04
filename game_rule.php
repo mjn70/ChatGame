@@ -17,12 +17,12 @@ include('conm.php');
           $game_stat = $fetch_gaem_info["playing_stat"];
           $play_tag = $fetch_gaem_info["tag"];
           if($game_stat == 1 || $play_tag == 1){
-                $myObj->gamer = 1;
-            $myJSON = json_encode($myObj);
+                $myObjr->gamer = 1;
+            $myJSON = json_encode($myObjr);
             echo $myJSON; 
           } else if ($game_stat == 1 || $play_tag == 0)  {
-                $myObj->gamer = 0;
-            $myJSON = json_encode($myObj);
+                $myObjr->gamer = 0;
+            $myJSON = json_encode($myObjr);
             echo $myJSON;
           }
           

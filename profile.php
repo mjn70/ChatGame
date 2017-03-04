@@ -257,25 +257,19 @@ include ('session.php');
 
             </div >
             <div id="test">
+                <input id="gamettt" name="game"type="text"  >
                 <p style="color: green; font-size: 35px; " id="testp"></p>
             </div>
             <script type="text/javascript"> 
-//              window.onload = function(){
-//              var counter = 5;
-//              var interval = setInterval(function() {
-//                  counter--;
-//                    // Display 'counter' wherever you want to display it.
-//                 if (counter === 0) {
-//                    // Display a login box
-//                    document.getElementById('testp').innerHTML =  " Dn now go go";
-//                   clearInterval(interval);
-////                 window.location.href = "game.php";
-//                       }else{
-//                           document.getElementById('testp').innerHTML = counter + " sec";
-//                       }
-//                       
-//                    }, 1500);
-//          };
+                
+               setInterval(function(){
+                   if($('#gamettt').val().charAt(0) === "game".charAt(0)   ){
+                 document.getElementById('testp').innerHTML = "gaem".charAt(0);
+             }else if($('#gamettt').val().charAt(0) === "nope".charAt(0)  ){
+                      document.getElementById('testp').innerHTML = "nope";
+                  }
+          },1000);
+          
                 </script>  
          </div>
         </div>

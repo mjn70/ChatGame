@@ -16,7 +16,7 @@ include('conm.php');
                 $player2_stat = $fetch_game_stat["player2"];
                 if($player1_stat == 1 && $player2_stat == 1){
                     //strat the gaem
-                    mysqli_query($conn, "UPDATE room_mm SET playing_stat=1,tag=1 WHERE room_id ='$game_key'");
+                    mysqli_query($conn, "UPDATE room_mm SET playing_stat=1,tag=1,last_word='game' WHERE room_id ='$game_key'");
                     
             $myObj->strat = 1;
             $myJSON = json_encode($myObj);
