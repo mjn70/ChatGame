@@ -17,7 +17,7 @@ include('conm.php');
                 if($player1_stat == 1 && $player2_stat == 1){
                     //strat the gaem
                     mysqli_query($conn, "UPDATE room_mm SET playing_stat=1,tag=1,last_word='game' WHERE room_id ='$game_key'");
-                    
+                    mysqli_query($conn,"INSERT INTO message (user,text,convid) VALUES('Bot','write game to strath chat game',  '$game_key')"); 
             $myObj->strat = 1;
             $myJSON = json_encode($myObj);
             echo $myJSON;

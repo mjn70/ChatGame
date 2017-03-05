@@ -16,11 +16,11 @@ include('conm.php');
           $fetch_gaem_info = mysqli_fetch_array($gamerule_q);
           $game_stat = $fetch_gaem_info["playing_stat"];
           $play_tag = $fetch_gaem_info["tag"];
-          if($game_stat == 1 || $play_tag == 1){
+          if($game_stat == 1 && $play_tag == 1){
                 $myObjr->gamer = 1;
             $myJSON = json_encode($myObjr);
             echo $myJSON; 
-          } else if ($game_stat == 1 || $play_tag == 0)  {
+          } else if ($game_stat == 1 && $play_tag == 0)  {
                 $myObjr->gamer = 0;
             $myJSON = json_encode($myObjr);
             echo $myJSON;

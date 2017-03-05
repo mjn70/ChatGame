@@ -6,7 +6,7 @@ include('conm.php');
     $login_sid = $_SESSION['login_id'];
     $login_sname =$_SESSION['login_user'];
    //get key room
-    $game_key = $_SESSION['Chat_gorp_id'];
+    $new_room_name = $_SESSION['Chat_gorp_id'];
               
 //if(isset($_POST['fword'])){ 
      //get word from table

@@ -122,7 +122,7 @@ include ('session.php');
 
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             myObj = JSON.parse(this.responseText);
               if(myObj.findg === 1){
                       $("#testp").text("Joining ....");
@@ -131,7 +131,7 @@ include ('session.php');
                       $("#testp").text("NO Room....");
                   }
               }
-        }
+        };
         
         xmlhttp.open("GET", "find_game.php", true);
         xmlhttp.send();
@@ -263,9 +263,9 @@ include ('session.php');
             <script type="text/javascript"> 
                 
                setInterval(function(){
-                   if($('#gamettt').val().charAt(0) === "game".charAt(0)   ){
+                   if($('#gamettt').val().charAt(0) === "game".charAt(0) ){
                  document.getElementById('testp').innerHTML = "gaem".charAt(0);
-             }else if($('#gamettt').val().charAt(0) === "nope".charAt(0)  ){
+             }else if($('#gamettt').val().charAt(0) === "nope".charAt(0) ){
                       document.getElementById('testp').innerHTML = "nope";
                   }
           },1000);
